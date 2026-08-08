@@ -35,7 +35,9 @@
   "sameAs": [
     "https://www.linkedin.com/in/shehab-medhat-0b32b7321/",
     "https://www.facebook.com/Shehabmedhatt",
-    "https://www.instagram.com/shehab_medhatt"
+    "https://www.instagram.com/shehab_medhatt",
+    "https://www.tiktok.com/@shehab_medhat",
+    "https://www.youtube.com/@Shehab__Medhat"
   ],
   "knowsAbout": ["React", "Next.js", "Node.js", "Nest.js", "Dart", "Flutter", "TypeScript", "MongoDB"]
 }
@@ -68,7 +70,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 32px 18px;
+    padding: 40px 4vw;
     line-height: 1.65;
   }
   .terminal{
@@ -99,7 +101,7 @@
     color: var(--text-muted);
   }
   .content{
-    padding: 34px 34px 40px;
+    padding: 40px 5vw 46px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 14.5px;
   }
@@ -173,8 +175,8 @@
   }
   .projects{
     margin: 0 0 26px 22px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 12px;
   }
   .project{
@@ -360,7 +362,7 @@
 <script>
   // ----- Followers counter -----
   // FALLBACK_COUNT is shown immediately and used if no live source is configured.
-  const FALLBACK_COUNT = 25200;
+  const FALLBACK_COUNT = 25100;
 
   // Point this at your deployed serverless function (see /api/followers.js).
   // Once deployed on Vercel it will be something like:
