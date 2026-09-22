@@ -4,12 +4,13 @@
 
 **The official personal website & portfolio** of Shehab Medhat.
 
-Fullstack Developer · Next.js · React · Node.js · Nest.js · Flutter
+Fullstack Mobile Developer · Flutter · Dart · JavaScript · TypeScript · MongoDB
 
-[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)](https://reactjs.org)
-[![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
 **Live:** [shehab-medhat.site](https://shehab-medhat.site/)
 
@@ -20,10 +21,10 @@ Fullstack Developer · Next.js · React · Node.js · Nest.js · Flutter
 ## ✨ About This Site
 
 A hand-crafted personal portfolio that showcases my work as a **fullstack
-developer** building products end to end. Highlights:
+mobile developer** building products end to end. Highlights:
 
 - 🚀 **Products** — creator of **Tagit ERP** and **CodeQ**
-- 🧩 **Stack** — Next.js, React, Node.js, Nest.js and Flutter
+- 🧩 **Stack** — Flutter, Dart, JavaScript, TypeScript, MongoDB and REST APIs
 - 🎨 **Design** — clean, responsive, and fast-loading
 - 🔍 **SEO-ready** — proper meta tags, canonical URL & robots
 
