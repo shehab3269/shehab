@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shehab Medhat — Flutter Fullstack Developer (Mobile)</title>
-<meta name="description" content="Shehab Medhat (shijz) — Flutter fullstack mobile developer since 2023. Builds products end to end with Flutter, Dart, JavaScript, TypeScript, MongoDB and REST APIs. Creator of Tagit ERP and CodeQ.">
-<meta name="keywords" content="Flutter developer Egypt, Flutter fullstack, mobile app developer, Flutter developer, Dart developer, Shehab Medhat, fullstack mobile developer">
+<title>Shehab Medhat — Flutter Developer & Content Creator</title>
+<meta name="description" content="Shehab Medhat (shijz) — Flutter fullstack mobile developer & content creator. Builds mobile apps end to end and creates content strategies that grow brands. Flutter, Dart, TypeScript, MongoDB.">
+<meta name="keywords" content="Flutter developer Egypt, Flutter fullstack, mobile app developer, content creator, content strategy, Flutter developer, Dart developer, Shehab Medhat, mobile app idea, app development, social media strategy">
 <meta name="author" content="Shehab Medhat">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -16,23 +16,23 @@
 
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Shehab Medhat">
-<meta property="og:title" content="Shehab Medhat — Flutter Fullstack Developer">
-<meta property="og:description" content="Flutter fullstack mobile developer since 2023. Builds products end to end with Flutter, Dart, JavaScript, TypeScript, MongoDB and REST APIs. Creator of Tagit ERP and CodeQ.">
+<meta property="og:title" content="Shehab Medhat — Flutter Developer & Content Creator">
+<meta property="og:description" content="Flutter fullstack mobile developer & content creator. Builds mobile apps end to end and creates content strategies that grow brands.">
 <meta property="og:url" content="https://shehab-medhat.site/">
 <meta property="og:image" content="https://shehab-medhat.site/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Shehab Medhat — Flutter fullstack developer portfolio">
+<meta property="og:image:alt" content="Shehab Medhat — Flutter developer and content creator portfolio">
 <meta property="og:locale" content="en_US">
 <meta property="profile:first_name" content="Shehab">
 <meta property="profile:last_name" content="Medhat">
 <meta property="profile:username" content="shijz">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shehab Medhat — Flutter Fullstack Developer">
-<meta name="twitter:description" content="Flutter fullstack mobile developer since 2023. Builds products end to end with Flutter, Dart, JavaScript, TypeScript, MongoDB and REST APIs.">
+<meta name="twitter:title" content="Shehab Medhat — Flutter Developer & Content Creator">
+<meta name="twitter:description" content="Flutter fullstack mobile developer & content creator. Builds mobile apps end to end and creates content strategies that grow brands.">
 <meta name="twitter:image" content="https://shehab-medhat.site/og-image.png">
-<meta name="twitter:image:alt" content="Shehab Medhat — Flutter fullstack developer portfolio">
+<meta name="twitter:image:alt" content="Shehab Medhat — Flutter developer and content creator portfolio">
 
 <meta name="theme-color" content="#101c17">
 <link rel="icon" href="https://shehab-medhat.site/favicon.svg" type="image/svg+xml">
@@ -52,7 +52,7 @@
       "url": "https://shehab-medhat.site/",
       "image": "https://shehab-medhat.site/og-image.png",
       "email": "mailto:sm@shehab-medhat.site",
-      "jobTitle": "Flutter Fullstack Developer",
+      "jobTitle": "Flutter Fullstack Developer & Content Creator",
       "nationality": { "@type": "Country", "name": "Egypt" },
       "sameAs": [
         "https://www.linkedin.com/in/shehab-medhat-0b32b7321/",
@@ -61,7 +61,7 @@
         "https://www.tiktok.com/@shehab_medhat",
         "https://www.youtube.com/@Shehab__Medhat"
       ],
-      "knowsAbout": ["Dart", "Flutter", "TypeScript", "JavaScript", "MongoDB", "REST APIs"]
+      "knowsAbout": ["Dart", "Flutter", "TypeScript", "JavaScript", "MongoDB", "REST APIs", "Content Creation", "Content Strategy"]
     },
     {
       "@type": "WebSite",
@@ -562,13 +562,94 @@
   .modal-actions .cta{ flex: 1; text-align: left; }
   .modal-actions .cta--mail:hover{ color:#6fa787; border-color:#6fa787; box-shadow: 0 10px 22px -12px rgba(111,167,135,.6); }
   .modal-actions .cta--whatsapp:hover{ color:#63d391; border-color:#63d391; box-shadow: 0 10px 22px -12px rgba(99,211,145,.6); }
+  .services{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+    margin: 0 0 8px 22px;
+  }
+  .service{
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .service:hover{
+    transform: translateY(-4px);
+    border-color: var(--accent-soft);
+    box-shadow: 0 14px 26px -16px rgba(0,0,0,.6);
+  }
+  .service-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .service-name{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+  }
+  .service-tag{
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .service-desc{
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .service-packs{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pack{
+    border: 1px dashed var(--border);
+    background: var(--surface);
+    border-radius: 5px;
+    padding: 6px 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .pack b{ color: var(--text); }
+  .service-cta{
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 8px 12px;
+    font-size: 12.5px;
+  }
+  .meeting-row{
+    margin: 14px 0 26px 22px;
+  }
+  #meetingBtn{
+    color: var(--accent-soft);
+    border-color: var(--accent-soft);
+  }
+  #meetingBtn:hover{
+    color: var(--bg);
+    background: var(--accent-soft);
+    border-color: var(--accent-soft);
+    box-shadow: 0 10px 24px -12px rgba(111,167,135,.7);
+  }
   @media (max-width: 900px){
     .duck{ display: none; }
   }
   @media (max-width: 480px){
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
-    .line, .out, h1, .role, .tags, .links, .footer, .projects, .cta-row{ margin-left: 0; }
+    .line, .out, h1, .role, .tags, .links, .footer, .projects, .cta-row, .services, .meeting-row{ margin-left: 0; }
   }
 </style>
 </head>
@@ -619,7 +700,7 @@
     <p class="comment"># welcome — feel free to look around</p>
     <div class="line"><span class="prompt">$</span><span class="cmd">whoami</span></div>
     <h1>Shehab Medhat <span class="alias">(shijz)</span><span class="cursor"></span></h1>
-    <p class="role">fullstack mobile developer · builds products end to end</p>
+    <p class="role">fullstack mobile developer & content creator · I ship apps and grow brands</p>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat stack.txt</span></div>
     <h2 class="sr-only">Technical skills</h2>
@@ -637,7 +718,8 @@
     <div class="line"><span class="prompt">$</span><span class="cmd">cat also_know.txt</span></div>
     <div class="tags">
       <span class="tag">Product thinking</span>
-      <span class="tag">Marketing basics</span>
+      <span class="tag">Content creation</span>
+      <span class="tag">Content strategy</span>
       <span class="tag">System design</span>
     </div>
 
@@ -649,9 +731,10 @@
       away, because honestly? this is where I love to create. I build
       complete mobile products end to end with Flutter and Dart, backed by
       JavaScript and TypeScript services wired through REST APIs and
-      MongoDB. And I create content around everything I build — sharing my
-      work and breaking down whatever I learn into something simple enough
-      for others to follow.
+      MongoDB. But I'm also a content creator — I make content about every
+      app I ship, and I build content strategies for brands that want to
+      grow. So if you bring me an idea, I don't just build the app. I help
+      it get seen.
     </p>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">ls projects/</span></div>
@@ -678,6 +761,42 @@
         </div>
         <p class="project-desc">A handful of smaller landing pages, dashboards, and client sites — simpler scope, same attention to detail.</p>
       </div>
+    </div>
+
+    <div class="line"><span class="prompt">$</span><span class="cmd">cat services.txt</span></div>
+    <h2 class="sr-only">Services, packages and booking</h2>
+    <div class="services">
+      <div class="service">
+        <div class="service-head">
+          <span class="service-name">app_build →</span>
+          <span class="service-tag">Flutter · iOS + Android</span>
+        </div>
+        <p class="service-desc">From a raw idea to a launched app. I handle the whole thing — UI, business logic, APIs, stores — with content included along the way.</p>
+        <div class="service-packs">
+          <span class="pack"><b>idea → mvp</b> from $1,500 · 3–6 wks</span>
+          <span class="pack"><b>full app</b> from $3,000 · 6–12 wks</span>
+          <span class="pack"><b>care & updates</b> from $200/mo</span>
+        </div>
+        <button type="button" class="cta service-cta" data-form="app">i have an app idea →</button>
+      </div>
+      <div class="service">
+        <div class="service-head">
+          <span class="service-name">content_strategy →</span>
+          <span class="service-tag">brands · creators</span>
+        </div>
+        <p class="service-desc">Content that actually grows a brand. Positioning, monthly plans, hooks and scripts — built around what your audience wants.</p>
+        <div class="service-packs">
+          <span class="pack"><b>strategy only</b> from $400 · 1 mo</span>
+          <span class="pack"><b>strategy + content</b> from $800/mo</span>
+          <span class="pack"><b>ongoing brand</b> from $1,500/mo</span>
+        </div>
+        <button type="button" class="cta service-cta" data-form="content">i want a content strategy →</button>
+      </div>
+    </div>
+
+    <div class="line" style="margin-top:24px;"><span class="prompt">$</span><span class="cmd">book_a_call.sh</span></div>
+    <div class="meeting-row">
+      <button type="button" class="cta cta--whatsapp" id="meetingBtn">book a 15-min intro call →</button>
     </div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat contact.txt</span></div>
@@ -724,6 +843,28 @@
     <div class="modal-actions">
       <button type="button" class="cta cta--mail" id="sendMail">email →</button>
       <button type="button" class="cta cta--whatsapp" id="sendWhatsApp">whatsapp →</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="serviceModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+    <div class="modal-head">
+      <span id="serviceModalTitle">./service.sh</span>
+      <button type="button" class="modal-close" data-close aria-label="Close">&times;</button>
+    </div>
+    <label class="field">
+      <span class="field-label">your name</span>
+      <input type="text" id="serviceName" placeholder="John" autocomplete="off">
+    </label>
+    <label class="field">
+      <span class="field-label" id="serviceDetailLabel">details</span>
+      <textarea id="serviceDetail" rows="5" placeholder="Tell me more..."></textarea>
+    </label>
+    <div class="modal-actions">
+      <button type="button" class="cta cta--mail" id="serviceMail">email →</button>
+      <button type="button" class="cta cta--whatsapp" id="serviceWa">whatsapp →</button>
     </div>
   </div>
 </div>
@@ -834,6 +975,62 @@
   });
   document.getElementById("sendWhatsApp").addEventListener("click", () => {
     window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(contactText()), "_blank", "noopener");
+  });
+
+  // ----- Service forms (app idea / content strategy) -----
+  const SERVICE_FORMS = {
+    app: {
+      title: "./app_idea.sh",
+      label: "your app idea",
+      placeholder: "What should the app do? Who is it for? Shoot me the rough idea."
+    },
+    content: {
+      title: "./content_strategy.sh",
+      label: "about your content goal",
+      placeholder: "What's your brand, niche or goal? Let's figure out the strategy together."
+    }
+  };
+
+  const svModal = document.getElementById("serviceModal");
+  const svTitle = document.getElementById("serviceModalTitle");
+  const svName = document.getElementById("serviceName");
+  const svDetailLabel = document.getElementById("serviceDetailLabel");
+  const svDetail = document.getElementById("serviceDetail");
+  let serviceKind = "app";
+
+  function openServiceForm(kind){
+    const cfg = SERVICE_FORMS[kind];
+    serviceKind = kind;
+    svTitle.textContent = cfg.title;
+    svDetailLabel.textContent = cfg.label;
+    svDetail.placeholder = cfg.placeholder;
+    svModal.hidden = false;
+    requestAnimationFrame(() => svModal.classList.add("open"));
+  }
+  function serviceText(){
+    const name = svName.value.trim() || "Anonymous";
+    const detail = svDetail.value.trim() || "Let's talk details.";
+    const prefix = serviceKind === "app"
+      ? "I have an APP IDEA: "
+      : "I want a CONTENT STRATEGY: ";
+    return prefix + "\n" + detail + "\n\n— " + name;
+  }
+
+  document.querySelectorAll("[data-form]").forEach(btn => {
+    btn.addEventListener("click", () => openServiceForm(btn.dataset.form));
+  });
+  document.getElementById("serviceMail").addEventListener("click", () => {
+    const subject = "[Portfolio] " + (serviceKind === "app" ? "App idea" : "Content strategy") + " from " + (svName.value.trim() || "Someone");
+    location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(serviceText());
+  });
+  document.getElementById("serviceWa").addEventListener("click", () => {
+    window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(serviceText()), "_blank", "noopener");
+  });
+
+  // ----- Meeting booking -----
+  document.getElementById("meetingBtn").addEventListener("click", () => {
+    const msg = "Hi Shehab! I'd love to book a 15-min intro call to talk about an idea / content strategy. What times work best for you?";
+    window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
   });
 </script>
 

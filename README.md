@@ -4,7 +4,7 @@
 
 **The official personal website & portfolio** of Shehab Medhat.
 
-Fullstack Mobile Developer · Flutter · Dart · JavaScript · TypeScript · MongoDB
+Flutter Fullstack Developer & Content Creator · Apps + Content Strategy
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white)](https://dart.dev)
@@ -20,10 +20,12 @@ Fullstack Mobile Developer · Flutter · Dart · JavaScript · TypeScript · Mon
 
 ## ✨ About This Site
 
-A hand-crafted personal portfolio that showcases my work as a **fullstack
-mobile developer** building products end to end. Highlights:
+A hand-crafted personal portfolio that showcases my work as a **Flutter
+fullstack developer & content creator**. Highlights:
 
 - 🚀 **Products** — creator of **Tagit ERP** and **CodeQ**
+- 📱 **App Dev** — Flutter apps (iOS + Android) from idea to launch
+- 🎯 **Content Strategy** — positioning, monthly plans, hooks & scripts
 - 🧩 **Stack** — Flutter, Dart, JavaScript, TypeScript, MongoDB and REST APIs
 - 🎨 **Design** — clean, responsive, and fast-loading
 - 🔍 **SEO-ready** — proper meta tags, canonical URL & robots
