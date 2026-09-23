@@ -495,6 +495,8 @@
     position: relative;
     width: 100%;
     max-width: 460px;
+    max-height: 88vh;
+    overflow-y: auto;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -750,6 +752,14 @@
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
     .line, .out, h1, .role, .tags, .links, .footer, .projects, .cta-row, .services, .meeting-row{ margin-left: 0; }
+    .service-cta{ width: 100%; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .terminal, .content > *, .dot, .status-dot, .flutter-badge, .duck, .ambient{
+      animation: none !important;
+      transition: none !important;
+    }
+    .cursor{ animation: none; }
   }
 </style>
 </head>
@@ -940,7 +950,7 @@
     </div>
     <label class="field">
       <span class="field-label">your name</span>
-      <input type="text" id="hiName" placeholder="John" autocomplete="off">
+      <input type="text" id="hiName" placeholder="Shehab" autocomplete="off">
     </label>
     <label class="field">
       <span class="field-label">message</span>
@@ -962,7 +972,7 @@
     </div>
     <label class="field">
       <span class="field-label">your name</span>
-      <input type="text" id="mtName" placeholder="John" autocomplete="off">
+      <input type="text" id="mtName" placeholder="Shehab" autocomplete="off">
     </label>
     <label class="field">
       <span class="field-label">pick a date</span>
@@ -1022,7 +1032,7 @@
     <div class="step" data-step="2">
       <label class="field">
         <span class="field-label">your name</span>
-        <input type="text" id="serviceName" placeholder="John" autocomplete="off">
+        <input type="text" id="serviceName" placeholder="Shehab" autocomplete="off">
       </label>
       <label class="field">
         <span class="field-label">your whatsapp / email</span>
@@ -1031,6 +1041,7 @@
     </div>
 
     <div class="step" data-step="3">
+      <p class="note" id="svSummary" style="margin-bottom:12px;"></p>
       <label class="field">
         <span class="field-label">how did you find me?</span>
         <select id="serviceReferral"></select>
@@ -1094,6 +1105,7 @@
     if(FOLLOWERS_API_URL){
       try{
         const res = await fetch(FOLLOWERS_API_URL, { cache: "no-store" });
+        if(!res.ok) throw new Error("fetch failed");
         const data = await res.json();
         const count = Number(data.total) || FALLBACK_COUNT;
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ count, ts: Date.now() }));
@@ -1160,9 +1172,11 @@
   document.getElementById("sendMail").addEventListener("click", () => {
     const subject = "[Portfolio] Message from " + (fieldName.value.trim() || "Someone");
     location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(contactText());
+    closeAny(modal);
   });
   document.getElementById("sendWhatsApp").addEventListener("click", () => {
     window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(contactText()), "_blank", "noopener");
+    closeAny(modal);
   });
 
   // ----- Service forms (app idea / content strategy) -----
@@ -1214,6 +1228,7 @@
   const svBack = document.getElementById("svBack");
   const svNext = document.getElementById("svNext");
   const svActions = document.getElementById("serviceModal").querySelector(".modal-actions");
+  const svSummary = document.getElementById("svSummary");
 
   function goStep(n){
     svStep = Math.min(3, Math.max(1, n));
@@ -1225,6 +1240,9 @@
     svBack.hidden = svStep === 1;
     svNext.hidden = svStep === 3;
     svActions.hidden = svStep !== 3;
+    if(svStep === 3){
+      svSummary.textContent = "✓ " + (pickedPack || "to discuss") + " · " + svBudget.value + " · " + svTimeline.value;
+    }
   }
   svBack.addEventListener("click", () => goStep(svStep - 1));
   svNext.addEventListener("click", () => goStep(svStep + 1));
@@ -1253,6 +1271,9 @@
     svTitle.textContent = cfg.title;
     svDetailLabel.textContent = cfg.detailLabel;
     svDetail.placeholder = cfg.detailPlaceholder;
+    svName.value = "";
+    svContact.value = "";
+    svDetail.value = "";
     fillSelect(svBudget, cfg.budgets);
     fillSelect(svTimeline, cfg.timelines);
     fillSelect(svReferral, REFERRALS);
@@ -1281,9 +1302,11 @@
   document.getElementById("serviceMail").addEventListener("click", () => {
     const subject = "[Portfolio] " + (serviceKind === "app" ? "App idea" : "Content strategy") + " from " + (svName.value.trim() || "Someone");
     location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(serviceText());
+    closeAny(svModal);
   });
   document.getElementById("serviceWa").addEventListener("click", () => {
     window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(serviceText()), "_blank", "noopener");
+    closeAny(svModal);
   });
 
   // ----- Meeting booking -----
@@ -1304,9 +1327,15 @@
     });
   }
   buildTimes();
-  mtDate.min = new Date().toISOString().split("T")[0];
+  const tz = new Date();
+  mtDate.min = tz.getFullYear() + "-" + String(tz.getMonth() + 1).padStart(2, "0") + "-" + String(tz.getDate()).padStart(2, "0");
+  mtDate.value = mtDate.min;
 
   document.getElementById("meetingBtn").addEventListener("click", () => {
+    mtName.value = "";
+    mtDate.value = mtDate.min;
+    pickedTime = "12:00";
+    buildTimes();
     mtModal.hidden = false;
     requestAnimationFrame(() => mtModal.classList.add("open"));
   });
@@ -1320,10 +1349,12 @@
   }
   document.getElementById("mtWa").addEventListener("click", () => {
     window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(meetingText()), "_blank", "noopener");
+    closeAny(mtModal);
   });
   document.getElementById("mtMail").addEventListener("click", () => {
     const subject = "[Portfolio] Meeting request from " + (mtName.value.trim() || "Someone");
     location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(meetingText());
+    closeAny(mtModal);
   });
 </script>
 
