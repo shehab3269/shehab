@@ -629,6 +629,72 @@
     margin-top: auto;
     padding: 8px 12px;
     font-size: 12.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .service-cta svg{
+    width: 17px;
+    height: 17px;
+    display: block;
+    flex-shrink: 0;
+  }
+  .field-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .field select{
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    padding: 9px 30px 9px 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: border-color .15s ease;
+  }
+  .field select:focus{ outline: none; border-color: var(--accent); }
+  .pills{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .pill{
+    border: 1px dashed var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .pill b{ display: block; color: var(--text); font-weight: 700; }
+  .pill i{ font-style: normal; color: var(--accent-soft); }
+  .pill:hover{ border-color: var(--accent-soft); }
+  .pill.selected{
+    border-style: solid;
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--surface-2);
+  }
+  @media (max-width: 520px){
+    .field-row{ grid-template-columns: 1fr; }
   }
   .meeting-row{
     margin: 14px 0 26px 22px;
@@ -777,7 +843,10 @@
           <span class="pack"><b>full app</b> from $3,000 · 6–12 wks</span>
           <span class="pack"><b>care & updates</b> from $200/mo</span>
         </div>
-        <button type="button" class="cta service-cta" data-form="app">i have an app idea →</button>
+        <button type="button" class="cta service-cta" data-form="app">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#45D1FD" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><line x1="10.8" y1="5.2" x2="13.2" y2="5.2"/><line x1="11" y1="18.3" x2="13" y2="18.3"/></svg>
+          work with me — i have an app idea →
+        </button>
       </div>
       <div class="service">
         <div class="service-head">
@@ -790,7 +859,10 @@
           <span class="pack"><b>strategy + content</b> from $800/mo</span>
           <span class="pack"><b>ongoing brand</b> from $1,500/mo</span>
         </div>
-        <button type="button" class="cta service-cta" data-form="content">i want a content strategy →</button>
+        <button type="button" class="cta service-cta" data-form="content">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h1.6L14 19V5L5.6 10H4a1 1 0 0 0-1 1z"/><path d="M16.5 9a4.2 4.2 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/><path d="M14 12h3"/></svg>
+          work with me — i need a content strategy →
+        </button>
       </div>
     </div>
 
@@ -858,9 +930,23 @@
       <span class="field-label">your name</span>
       <input type="text" id="serviceName" placeholder="John" autocomplete="off">
     </label>
+    <div class="field">
+      <span class="field-label" id="servicePackLabel">which package?</span>
+      <div class="pills" id="servicePacks"></div>
+    </div>
+    <div class="field-row">
+      <label class="field">
+        <span class="field-label">budget</span>
+        <select id="serviceBudget"></select>
+      </label>
+      <label class="field">
+        <span class="field-label">timeline</span>
+        <select id="serviceTimeline"></select>
+      </label>
+    </div>
     <label class="field">
       <span class="field-label" id="serviceDetailLabel">details</span>
-      <textarea id="serviceDetail" rows="5" placeholder="Tell me more..."></textarea>
+      <textarea id="serviceDetail" rows="4" placeholder="Tell me more..."></textarea>
     </label>
     <div class="modal-actions">
       <button type="button" class="cta cta--mail" id="serviceMail">email →</button>
@@ -981,13 +1067,29 @@
   const SERVICE_FORMS = {
     app: {
       title: "./app_idea.sh",
-      label: "your app idea",
-      placeholder: "What should the app do? Who is it for? Shoot me the rough idea."
+      detailLabel: "the idea",
+      detailPlaceholder: "What should the app do? Who is it for? Shoot me the rough idea.",
+      packages: [
+        { v: "idea → mvp", p: "from $1,500 · 3–6 wks" },
+        { v: "full app", p: "from $3,000 · 6–12 wks" },
+        { v: "care & updates", p: "from $200/mo" },
+        { v: "not sure — help me pick", p: "" }
+      ],
+      budgets: ["< $500", "$500 – $1,500", "$1,500 – $3,000", "$3,000+", "let's discuss"],
+      timelines: ["asap", "~1 month", "1–3 months", "flexible"]
     },
     content: {
       title: "./content_strategy.sh",
-      label: "about your content goal",
-      placeholder: "What's your brand, niche or goal? Let's figure out the strategy together."
+      detailLabel: "your brand / goal",
+      detailPlaceholder: "What's your brand, niche or goal? Let's shape the strategy together.",
+      packages: [
+        { v: "strategy only", p: "from $400 · 1 mo" },
+        { v: "strategy + content", p: "from $800/mo" },
+        { v: "ongoing brand", p: "from $1,500/mo" },
+        { v: "not sure — help me pick", p: "" }
+      ],
+      budgets: ["< $200/mo", "$200 – $800/mo", "$800 – $1,500/mo", "$1,500+/mo", "let's discuss"],
+      timelines: ["1 month", "3 months", "6+ months", "flexible"]
     }
   };
 
@@ -996,24 +1098,50 @@
   const svName = document.getElementById("serviceName");
   const svDetailLabel = document.getElementById("serviceDetailLabel");
   const svDetail = document.getElementById("serviceDetail");
+  const svBudget = document.getElementById("serviceBudget");
+  const svTimeline = document.getElementById("serviceTimeline");
+  const svPacks = document.getElementById("servicePacks");
   let serviceKind = "app";
+  let pickedPack = null;
 
+  function fillSelect(sel, options){
+    sel.innerHTML = options.map(o =>
+      "<option value=\"" + o + "\">" + o + "</option>"
+    ).join("");
+  }
+  function buildPills(cfg){
+    svPacks.innerHTML = cfg.packages.map(it =>
+      "<button type=\"button\" class=\"pill" + (pickedPack === it.v ? " selected" : "") + "\" data-pack=\"" + it.v + "\">" +
+        "<b>" + it.v + "</b>" +
+        (it.p ? "<i>" + it.p + "</i>" : "") +
+      "</button>"
+    ).join("");
+    Array.prototype.forEach.call(svPacks.querySelectorAll(".pill"), b => {
+      b.addEventListener("click", () => { pickedPack = b.dataset.pack; buildPills(cfg); });
+    });
+  }
   function openServiceForm(kind){
     const cfg = SERVICE_FORMS[kind];
     serviceKind = kind;
+    pickedPack = cfg.packages[0].v;
     svTitle.textContent = cfg.title;
-    svDetailLabel.textContent = cfg.label;
-    svDetail.placeholder = cfg.placeholder;
+    svDetailLabel.textContent = cfg.detailLabel;
+    svDetail.placeholder = cfg.detailPlaceholder;
+    fillSelect(svBudget, cfg.budgets);
+    fillSelect(svTimeline, cfg.timelines);
+    buildPills(cfg);
     svModal.hidden = false;
     requestAnimationFrame(() => svModal.classList.add("open"));
   }
   function serviceText(){
     const name = svName.value.trim() || "Anonymous";
-    const detail = svDetail.value.trim() || "Let's talk details.";
-    const prefix = serviceKind === "app"
-      ? "I have an APP IDEA: "
-      : "I want a CONTENT STRATEGY: ";
-    return prefix + "\n" + detail + "\n\n— " + name;
+    const kind = serviceKind === "app" ? "APP IDEA" : "CONTENT STRATEGY";
+    return "I want to work with you — " + kind + ":\n" +
+      "  Name: " + name + "\n" +
+      "  Package: " + (pickedPack || "to discuss") + "\n" +
+      "  Budget: " + svBudget.value + "\n" +
+      "  Timeline: " + svTimeline.value + "\n" +
+      "  Details: " + (svDetail.value.trim() || "Let's talk details.");
   }
 
   document.querySelectorAll("[data-form]").forEach(btn => {
