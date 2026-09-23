@@ -80,12 +80,18 @@
     border: 1px solid var(--border);
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
     box-shadow: 0 30px 60px -25px rgba(0,0,0,0.6);
-    animation: termIn .8s cubic-bezier(.16,1,.3,1) both;
+    animation: termIn .8s cubic-bezier(.16,1,.3,1) both, termGlow 6s ease-in-out infinite;
   }
   @keyframes termIn{
     from{ opacity:0; transform: translateY(26px) scale(.985); }
     to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+  @keyframes termGlow{
+    0%,100%{ box-shadow: 0 30px 60px -25px rgba(0,0,0,.6), 0 0 0 rgba(69,209,253,0); }
+    50%{ box-shadow: 0 30px 60px -25px rgba(0,0,0,.6), 0 0 50px rgba(69,209,253,.12); }
   }
   .content > *{
     animation: fadeUp .6s ease both;
@@ -107,6 +113,7 @@
   .content > *:nth-child(15){ animation-delay:1.10s }
   .content > *:nth-child(16){ animation-delay:1.17s }
   .content > *:nth-child(17){ animation-delay:1.24s }
+  .content > *:nth-child(18){ animation-delay:1.31s }
   @keyframes fadeUp{
     from{ opacity:0; transform: translateY(14px); }
     to{ opacity:1; transform: translateY(0); }
@@ -133,6 +140,47 @@
   .dot.r{ background:#e2685b; }
   .dot.y{ background:#e6b45c; }
   .dot.g{ background:#63b478; }
+  .titlebar-right{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .status{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--accent-soft);
+  }
+  .status-dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #63b478;
+    margin-left: 0;
+    animation: onlinePulse 2.2s ease-out infinite;
+  }
+  @keyframes onlinePulse{
+    0%{ box-shadow: 0 0 0 0 rgba(99,180,120,.55); }
+    70%{ box-shadow: 0 0 0 7px rgba(99,180,120,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(99,180,120,0); }
+  }
+  .flutter-badge{
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    animation: badgePulse 3s ease-in-out infinite;
+  }
+  .flutter-badge svg{
+    width: 22px; height: 22px;
+    display: block;
+    filter: drop-shadow(0 0 6px rgba(69,209,253,.55));
+  }
+  @keyframes badgePulse{
+    0%,100%{ transform: translateY(0) scale(1); }
+    50%{ transform: translateY(-2px) scale(1.07); }
+  }
   .titlebar span{
     margin-left: 8px;
     font-family: 'JetBrains Mono', monospace;
@@ -333,17 +381,151 @@
     0%,100%{ transform: translateY(0) rotate(-4deg); }
     50%{ transform: translateY(-13px) rotate(4deg); }
   }
+  .ambient{
+    position: fixed;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(48% 40% at 30% 25%, rgba(69,209,253,.08), transparent 70%),
+      radial-gradient(52% 44% at 78% 72%, rgba(232,163,61,.10), transparent 70%);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes drift{
+    from{ transform: translate(-1.5%, -1.5%) rotate(0deg); }
+    to{ transform: translate(1.5%, 1.5%) rotate(2deg); }
+  }
+  .tag--flutter{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tag--flutter svg{
+    width: 13px; height: 13px;
+    display: block;
+  }
+  .cta-row{
+    margin: 18px 0 8px 22px;
+  }
+  .cta{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
+  }
+  .cta:hover{
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px -12px rgba(232,163,61,.6);
+  }
+  .modal{
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal[hidden]{ display: none; }
+  .modal-backdrop{
+    position: absolute;
+    inset: 0;
+    background: rgba(7,12,10,.72);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .modal-panel{
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,.7);
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(14px) scale(.98);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .modal.open .modal-backdrop{ opacity: 1; }
+  .modal.open .modal-panel{ opacity: 1; transform: translateY(0) scale(1); }
+  .modal-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .modal-close{
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 5px;
+    font-size: 15px;
+    line-height: 1;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .modal-close:hover{ color: var(--accent); border-color: var(--accent); }
+  .field{
+    display: block;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: lowercase;
+  }
+  .field input, .field textarea{
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    padding: 9px 12px;
+    resize: vertical;
+    transition: border-color .15s ease;
+  }
+  .field input:focus, .field textarea:focus{
+    outline: none;
+    border-color: var(--accent);
+  }
+  .modal-actions{
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .modal-actions .cta{ flex: 1; text-align: left; }
+  .modal-actions .cta--mail:hover{ color:#6fa787; border-color:#6fa787; box-shadow: 0 10px 22px -12px rgba(111,167,135,.6); }
+  .modal-actions .cta--whatsapp:hover{ color:#63d391; border-color:#63d391; box-shadow: 0 10px 22px -12px rgba(99,211,145,.6); }
   @media (max-width: 900px){
     .duck{ display: none; }
   }
   @media (max-width: 480px){
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
-    .line, .out, h1, .role, .tags, .links, .footer, .projects{ margin-left: 0; }
+    .line, .out, h1, .role, .tags, .links, .footer, .projects, .cta-row{ margin-left: 0; }
   }
 </style>
 </head>
 <body>
+
+<div class="ambient" aria-hidden="true"></div>
 
 <div class="duck duck--left" aria-hidden="true">
   <svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
@@ -376,6 +558,12 @@
     <span class="dot y"></span>
     <span class="dot g"></span>
     <span>sm@shehab-medhat.site</span>
+    <span class="titlebar-right">
+      <span class="status"><span class="status-dot"></span>online</span>
+      <span class="flutter-badge" title="Flutter — since 2023">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z" fill="#45D1FD"/></svg>
+      </span>
+    </span>
   </div>
 
   <div class="content">
@@ -387,7 +575,10 @@
     <div class="line"><span class="prompt">$</span><span class="cmd">cat stack.txt</span></div>
     <h2 class="sr-only">Technical skills</h2>
     <div class="tags">
-      <span class="tag">Dart / Flutter</span>
+      <span class="tag tag--flutter">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z" fill="#45D1FD"/></svg>
+        Dart / Flutter
+      </span>
       <span class="tag">TypeScript</span>
       <span class="tag">JavaScript</span>
       <span class="tag">MongoDB</span>
@@ -451,6 +642,10 @@
       <a href="https://www.youtube.com/@Shehab__Medhat" target="_blank" rel="noopener">YouTube</a>
     </div>
 
+    <div class="cta-row">
+      <button type="button" class="cta" id="contactBtn">$ ./say_hi.sh →</button>
+    </div>
+
     <div class="line" style="margin-top:26px;"><span class="prompt">$</span><span class="cmd">cat followers.txt</span></div>
     <h2 class="sr-only">Followers</h2>
     <div class="followers">
@@ -461,6 +656,28 @@
     <div class="footer">sm@shehab-medhat.site:~$ <span style="opacity:.6">_</span></div>
   </div>
 </main>
+
+<div class="modal" id="contactModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <span id="modalTitle">./say_hi.sh</span>
+      <button type="button" class="modal-close" data-close aria-label="Close">&times;</button>
+    </div>
+    <label class="field">
+      <span class="field-label">your name</span>
+      <input type="text" id="hiName" placeholder="John" autocomplete="off">
+    </label>
+    <label class="field">
+      <span class="field-label">message</span>
+      <textarea id="hiMsg" rows="4" placeholder="Hey Shehab, let's build something together..."></textarea>
+    </label>
+    <div class="modal-actions">
+      <button type="button" class="cta cta--mail" id="sendMail">email →</button>
+      <button type="button" class="cta cta--whatsapp" id="sendWhatsApp">whatsapp →</button>
+    </div>
+  </div>
+</div>
 
 <script>
   // ----- Followers counter -----
@@ -531,6 +748,43 @@
     }, { threshold: 0.5 });
 
     observer.observe(el);
+  });
+
+  // ----- Contact form (email / whatsapp) -----
+  // TODO: put your real WhatsApp number in international format, e.g. "2010XXXXXXXX".
+  const CONTACT = {
+    email: "sm@shehab-medhat.site",
+    whatsapp: "20XXXXXXXXXX"
+  };
+
+  const modal = document.getElementById("contactModal");
+  const fieldName = document.getElementById("hiName");
+  const fieldMsg = document.getElementById("hiMsg");
+
+  function openModal(){
+    modal.hidden = false;
+    requestAnimationFrame(() => modal.classList.add("open"));
+  }
+  function closeModal(){
+    modal.classList.remove("open");
+    setTimeout(() => { modal.hidden = true; }, 200);
+  }
+  function contactText(){
+    const name = fieldName.value.trim() || "Anonymous";
+    const msg  = fieldMsg.value.trim() || "Hey Shehab, I saw your portfolio and I'd love to talk!";
+    return msg + "\n\n— " + name;
+  }
+
+  document.getElementById("contactBtn").addEventListener("click", openModal);
+  document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", closeModal));
+  document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+  document.getElementById("sendMail").addEventListener("click", () => {
+    const subject = "[Portfolio] Message from " + (fieldName.value.trim() || "Someone");
+    location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(contactText());
+  });
+  document.getElementById("sendWhatsApp").addEventListener("click", () => {
+    window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(contactText()), "_blank", "noopener");
   });
 </script>
 
