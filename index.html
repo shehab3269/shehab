@@ -686,6 +686,31 @@
   }
   .pill b{ display: block; color: var(--text); font-weight: 700; }
   .pill i{ font-style: normal; color: var(--accent-soft); }
+  .pill em{
+    display: block;
+    font-style: normal;
+    color: var(--text-muted);
+    font-size: 10.5px;
+    line-height: 1.4;
+    max-width: 230px;
+    margin-top: 3px;
+  }
+  .field input[type="date"]{
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .field input[type="date"]::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+    filter: invert(.8) sepia(.3) saturate(.6);
+  }
+  .note{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0 0 4px 0;
+    line-height: 1.5;
+  }
   .pill:hover{ border-color: var(--accent-soft); }
   .pill.selected{
     border-style: solid;
@@ -839,9 +864,9 @@
         </div>
         <p class="service-desc">From a raw idea to a launched app. I handle the whole thing — UI, business logic, APIs, stores — with content included along the way.</p>
         <div class="service-packs">
-          <span class="pack"><b>idea → mvp</b> from $1,500 · 3–6 wks</span>
-          <span class="pack"><b>full app</b> from $3,000 · 6–12 wks</span>
-          <span class="pack"><b>care & updates</b> from $200/mo</span>
+          <span class="pack"><b>idea → mvp</b> from $500 · 2–4 wks</span>
+          <span class="pack"><b>full app</b> from $1,200 · 4–8 wks</span>
+          <span class="pack"><b>care & updates</b> from $100/mo</span>
         </div>
         <button type="button" class="cta service-cta" data-form="app">
           <svg viewBox="0 0 24 24" fill="none" stroke="#45D1FD" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><line x1="10.8" y1="5.2" x2="13.2" y2="5.2"/><line x1="11" y1="18.3" x2="13" y2="18.3"/></svg>
@@ -855,9 +880,9 @@
         </div>
         <p class="service-desc">Content that actually grows a brand. Positioning, monthly plans, hooks and scripts — built around what your audience wants.</p>
         <div class="service-packs">
-          <span class="pack"><b>strategy only</b> from $400 · 1 mo</span>
-          <span class="pack"><b>strategy + content</b> from $800/mo</span>
-          <span class="pack"><b>ongoing brand</b> from $1,500/mo</span>
+          <span class="pack"><b>strategy only</b> from $150 · 1 mo</span>
+          <span class="pack"><b>strategy + content</b> from $300/mo</span>
+          <span class="pack"><b>ongoing brand</b> from $600/mo</span>
         </div>
         <button type="button" class="cta service-cta" data-form="content">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h1.6L14 19V5L5.6 10H4a1 1 0 0 0-1 1z"/><path d="M16.5 9a4.2 4.2 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/><path d="M14 12h3"/></svg>
@@ -919,6 +944,42 @@
   </div>
 </div>
 
+<div class="modal" id="meetingModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="meetingModalTitle">
+    <div class="modal-head">
+      <span id="meetingModalTitle">book_a_call.sh</span>
+      <button type="button" class="modal-close" data-close aria-label="Close">&times;</button>
+    </div>
+    <label class="field">
+      <span class="field-label">your name</span>
+      <input type="text" id="mtName" placeholder="John" autocomplete="off">
+    </label>
+    <label class="field">
+      <span class="field-label">pick a date</span>
+      <input type="date" id="mtDate">
+    </label>
+    <div class="field">
+      <span class="field-label">pick a time</span>
+      <div class="pills" id="mtTimes"></div>
+    </div>
+    <label class="field">
+      <span class="field-label">topic</span>
+      <select id="mtTopic">
+        <option>just saying hi / getting to know</option>
+        <option>an app idea</option>
+        <option>a content strategy</option>
+        <option>something else</option>
+      </select>
+    </label>
+    <p class="note">I'll confirm the time with you once I receive it — times are flexible.</p>
+    <div class="modal-actions">
+      <button type="button" class="cta cta--mail" id="mtMail">book via email →</button>
+      <button type="button" class="cta cta--whatsapp" id="mtWa">book via whatsapp →</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="serviceModal" hidden>
   <div class="modal-backdrop" data-close></div>
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
@@ -929,6 +990,10 @@
     <label class="field">
       <span class="field-label">your name</span>
       <input type="text" id="serviceName" placeholder="John" autocomplete="off">
+    </label>
+    <label class="field">
+      <span class="field-label">your whatsapp / email</span>
+      <input type="text" id="serviceContact" placeholder="+201012345678 or you@email.com" autocomplete="off">
     </label>
     <div class="field">
       <span class="field-label" id="servicePackLabel">which package?</span>
@@ -944,6 +1009,10 @@
         <select id="serviceTimeline"></select>
       </label>
     </div>
+    <label class="field">
+      <span class="field-label">how did you find me?</span>
+      <select id="serviceReferral"></select>
+    </label>
     <label class="field">
       <span class="field-label" id="serviceDetailLabel">details</span>
       <textarea id="serviceDetail" rows="4" placeholder="Tell me more..."></textarea>
@@ -1041,9 +1110,9 @@
     modal.hidden = false;
     requestAnimationFrame(() => modal.classList.add("open"));
   }
-  function closeModal(){
-    modal.classList.remove("open");
-    setTimeout(() => { modal.hidden = true; }, 200);
+  function closeAny(m){
+    m.classList.remove("open");
+    setTimeout(() => { m.hidden = true; }, 200);
   }
   function contactText(){
     const name = fieldName.value.trim() || "Anonymous";
@@ -1052,8 +1121,13 @@
   }
 
   document.getElementById("contactBtn").addEventListener("click", openModal);
-  document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", closeModal));
-  document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+  document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", () => {
+    const m = el.closest(".modal");
+    if(m) closeAny(m);
+  }));
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape") document.querySelectorAll(".modal.open").forEach(m => closeAny(m));
+  });
 
   document.getElementById("sendMail").addEventListener("click", () => {
     const subject = "[Portfolio] Message from " + (fieldName.value.trim() || "Someone");
@@ -1068,30 +1142,31 @@
     app: {
       title: "./app_idea.sh",
       detailLabel: "the idea",
-      detailPlaceholder: "What should the app do? Who is it for? Shoot me the rough idea.",
+      detailPlaceholder: "What should the app do? Who is it for? Tell me the problem it solves.",
       packages: [
-        { v: "idea → mvp", p: "from $1,500 · 3–6 wks" },
-        { v: "full app", p: "from $3,000 · 6–12 wks" },
-        { v: "care & updates", p: "from $200/mo" },
-        { v: "not sure — help me pick", p: "" }
+        { v: "idea → mvp", p: "from $500 · 2–4 wks", blurb: "design, build, app store setup" },
+        { v: "full app", p: "from $1,200 · 4–8 wks", blurb: "everything in mvp + advanced features & backend" },
+        { v: "care & updates", p: "from $100/mo", blurb: "bug fixes, updates, small tweaks" },
+        { v: "not sure — help me pick", p: "", blurb: "we'll figure it out together on a quick call" }
       ],
-      budgets: ["< $500", "$500 – $1,500", "$1,500 – $3,000", "$3,000+", "let's discuss"],
+      budgets: ["< $500", "$500 – $1,200", "$1,200 – $3,000", "$3,000+", "let's discuss"],
       timelines: ["asap", "~1 month", "1–3 months", "flexible"]
     },
     content: {
       title: "./content_strategy.sh",
       detailLabel: "your brand / goal",
-      detailPlaceholder: "What's your brand, niche or goal? Let's shape the strategy together.",
+      detailPlaceholder: "What's your brand, niche or goal? Who is your audience?",
       packages: [
-        { v: "strategy only", p: "from $400 · 1 mo" },
-        { v: "strategy + content", p: "from $800/mo" },
-        { v: "ongoing brand", p: "from $1,500/mo" },
-        { v: "not sure — help me pick", p: "" }
+        { v: "strategy only", p: "from $150 · 1 mo", blurb: "positioning, audience + 1-month content plan" },
+        { v: "strategy + content", p: "from $300/mo", blurb: "plan + hooks, scripts and ready-to-post content" },
+        { v: "ongoing brand", p: "from $600/mo", blurb: "a monthly content engine that grows your brand" },
+        { v: "not sure — help me pick", p: "", blurb: "we'll figure it out together on a quick call" }
       ],
-      budgets: ["< $200/mo", "$200 – $800/mo", "$800 – $1,500/mo", "$1,500+/mo", "let's discuss"],
+      budgets: ["< $150/mo", "$150 – $300/mo", "$300 – $600/mo", "$600+/mo", "let's discuss"],
       timelines: ["1 month", "3 months", "6+ months", "flexible"]
     }
   };
+  const REFERRALS = ["Instagram", "TikTok", "YouTube", "LinkedIn", "Google search", "word of mouth", "other"];
 
   const svModal = document.getElementById("serviceModal");
   const svTitle = document.getElementById("serviceModalTitle");
@@ -1100,6 +1175,8 @@
   const svDetail = document.getElementById("serviceDetail");
   const svBudget = document.getElementById("serviceBudget");
   const svTimeline = document.getElementById("serviceTimeline");
+  const svReferral = document.getElementById("serviceReferral");
+  const svContact = document.getElementById("serviceContact");
   const svPacks = document.getElementById("servicePacks");
   let serviceKind = "app";
   let pickedPack = null;
@@ -1114,6 +1191,7 @@
       "<button type=\"button\" class=\"pill" + (pickedPack === it.v ? " selected" : "") + "\" data-pack=\"" + it.v + "\">" +
         "<b>" + it.v + "</b>" +
         (it.p ? "<i>" + it.p + "</i>" : "") +
+        (it.blurb ? "<em>" + it.blurb + "</em>" : "") +
       "</button>"
     ).join("");
     Array.prototype.forEach.call(svPacks.querySelectorAll(".pill"), b => {
@@ -1129,18 +1207,22 @@
     svDetail.placeholder = cfg.detailPlaceholder;
     fillSelect(svBudget, cfg.budgets);
     fillSelect(svTimeline, cfg.timelines);
+    fillSelect(svReferral, REFERRALS);
     buildPills(cfg);
     svModal.hidden = false;
     requestAnimationFrame(() => svModal.classList.add("open"));
   }
   function serviceText(){
     const name = svName.value.trim() || "Anonymous";
+    const contact = svContact.value.trim() || "let's arrange contact later";
     const kind = serviceKind === "app" ? "APP IDEA" : "CONTENT STRATEGY";
     return "I want to work with you — " + kind + ":\n" +
       "  Name: " + name + "\n" +
+      "  Contact: " + contact + "\n" +
       "  Package: " + (pickedPack || "to discuss") + "\n" +
       "  Budget: " + svBudget.value + "\n" +
       "  Timeline: " + svTimeline.value + "\n" +
+      "  Found via: " + svReferral.value + "\n" +
       "  Details: " + (svDetail.value.trim() || "Let's talk details.");
   }
 
@@ -1156,9 +1238,43 @@
   });
 
   // ----- Meeting booking -----
+  const MT_TIMES = ["10:00", "11:00", "12:00", "14:00", "16:00", "18:00"];
+  const mtModal = document.getElementById("meetingModal");
+  const mtDate = document.getElementById("mtDate");
+  const mtTimes = document.getElementById("mtTimes");
+  const mtName = document.getElementById("mtName");
+  const mtTopic = document.getElementById("mtTopic");
+  let pickedTime = "12:00";
+
+  function buildTimes(){
+    mtTimes.innerHTML = MT_TIMES.map(t =>
+      "<button type=\"button\" class=\"pill" + (pickedTime === t ? " selected" : "") + "\" data-time=\"" + t + "\"><b>" + t + "</b></button>"
+    ).join("");
+    Array.prototype.forEach.call(mtTimes.querySelectorAll(".pill"), b => {
+      b.addEventListener("click", () => { pickedTime = b.dataset.time; buildTimes(); });
+    });
+  }
+  buildTimes();
+  mtDate.min = new Date().toISOString().split("T")[0];
+
   document.getElementById("meetingBtn").addEventListener("click", () => {
-    const msg = "Hi Shehab! I'd love to book a 15-min intro call to talk about an idea / content strategy. What times work best for you?";
-    window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+    mtModal.hidden = false;
+    requestAnimationFrame(() => mtModal.classList.add("open"));
+  });
+  function meetingText(){
+    const name = mtName.value.trim() || "Anonymous";
+    return "Hi Shehab! I'd like to book a 15-min intro call:\n" +
+      "  Date: " + (mtDate.value || "any day that works") + "\n" +
+      "  Time: " + pickedTime + "\n" +
+      "  Topic: " + mtTopic.value + "\n" +
+      "  Name: " + name;
+  }
+  document.getElementById("mtWa").addEventListener("click", () => {
+    window.open("https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(meetingText()), "_blank", "noopener");
+  });
+  document.getElementById("mtMail").addEventListener("click", () => {
+    const subject = "[Portfolio] Meeting request from " + (mtName.value.trim() || "Someone");
+    location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(meetingText());
   });
 </script>
 
