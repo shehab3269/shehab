@@ -562,6 +562,15 @@
   .modal-actions .cta{ flex: 1; text-align: left; }
   .modal-actions .cta--mail:hover{ color:#6fa787; border-color:#6fa787; box-shadow: 0 10px 22px -12px rgba(111,167,135,.6); }
   .modal-actions .cta--whatsapp:hover{ color:#63d391; border-color:#63d391; box-shadow: 0 10px 22px -12px rgba(99,211,145,.6); }
+  .step{ display:none; }
+  .step.is-on{ display:block; animation: fadeUp .28s ease; }
+  .steps-dots{ display:inline-flex; gap:6px; margin-right:8px; vertical-align:middle; }
+  .step-dot{ width:8px; height:8px; border-radius:50%; background:transparent; border:1px solid var(--border); transition: background .2s, border-color .2s; }
+  .step-dot.is-on{ background: var(--accent); border-color: var(--accent); }
+  .step-dot.is-done{ background: var(--accent-soft); border-color: var(--accent-soft); }
+  .modal-nav{ display:flex; gap:10px; margin-top:16px; }
+  .modal-nav .cta{ flex:1; text-align:center; font-size:12.5px; }
+  .cta[hidden], .modal-actions[hidden]{ display:none; }
   .services{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -864,9 +873,9 @@
         </div>
         <p class="service-desc">From a raw idea to a launched app. I handle the whole thing — UI, business logic, APIs, stores — with content included along the way.</p>
         <div class="service-packs">
-          <span class="pack"><b>idea → mvp</b> from $500 · 2–4 wks</span>
-          <span class="pack"><b>full app</b> from $1,200 · 4–8 wks</span>
-          <span class="pack"><b>care & updates</b> from $100/mo</span>
+          <span class="pack"><b>idea → mvp</b> from $250 · 2–4 wks</span>
+          <span class="pack"><b>full app</b> from $600 · 4–8 wks</span>
+          <span class="pack"><b>care & updates</b> from $50/mo</span>
         </div>
         <button type="button" class="cta service-cta" data-form="app">
           <svg viewBox="0 0 24 24" fill="none" stroke="#45D1FD" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><line x1="10.8" y1="5.2" x2="13.2" y2="5.2"/><line x1="11" y1="18.3" x2="13" y2="18.3"/></svg>
@@ -880,9 +889,9 @@
         </div>
         <p class="service-desc">Content that actually grows a brand. Positioning, monthly plans, hooks and scripts — built around what your audience wants.</p>
         <div class="service-packs">
-          <span class="pack"><b>strategy only</b> from $150 · 1 mo</span>
-          <span class="pack"><b>strategy + content</b> from $300/mo</span>
-          <span class="pack"><b>ongoing brand</b> from $600/mo</span>
+          <span class="pack"><b>strategy only</b> from $100 · 1 mo</span>
+          <span class="pack"><b>strategy + content</b> from $200/mo</span>
+          <span class="pack"><b>ongoing brand</b> from $350/mo</span>
         </div>
         <button type="button" class="cta service-cta" data-form="content">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h1.6L14 19V5L5.6 10H4a1 1 0 0 0-1 1z"/><path d="M16.5 9a4.2 4.2 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/><path d="M14 12h3"/></svg>
@@ -985,39 +994,58 @@
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
     <div class="modal-head">
       <span id="serviceModalTitle">./service.sh</span>
+      <span class="steps-dots" id="svDots">
+        <span class="step-dot is-on"></span>
+        <span class="step-dot"></span>
+        <span class="step-dot"></span>
+      </span>
       <button type="button" class="modal-close" data-close aria-label="Close">&times;</button>
     </div>
-    <label class="field">
-      <span class="field-label">your name</span>
-      <input type="text" id="serviceName" placeholder="John" autocomplete="off">
-    </label>
-    <label class="field">
-      <span class="field-label">your whatsapp / email</span>
-      <input type="text" id="serviceContact" placeholder="+201012345678 or you@email.com" autocomplete="off">
-    </label>
-    <div class="field">
-      <span class="field-label" id="servicePackLabel">which package?</span>
-      <div class="pills" id="servicePacks"></div>
+
+    <div class="step is-on" data-step="1">
+      <div class="field">
+        <span class="field-label" id="servicePackLabel">what do you need?</span>
+        <div class="pills" id="servicePacks"></div>
+      </div>
+      <div class="field-row">
+        <label class="field">
+          <span class="field-label">budget</span>
+          <select id="serviceBudget"></select>
+        </label>
+        <label class="field">
+          <span class="field-label">timeline</span>
+          <select id="serviceTimeline"></select>
+        </label>
+      </div>
     </div>
-    <div class="field-row">
+
+    <div class="step" data-step="2">
       <label class="field">
-        <span class="field-label">budget</span>
-        <select id="serviceBudget"></select>
+        <span class="field-label">your name</span>
+        <input type="text" id="serviceName" placeholder="John" autocomplete="off">
       </label>
       <label class="field">
-        <span class="field-label">timeline</span>
-        <select id="serviceTimeline"></select>
+        <span class="field-label">your whatsapp / email</span>
+        <input type="text" id="serviceContact" placeholder="+201012345678 or you@email.com" autocomplete="off">
       </label>
     </div>
-    <label class="field">
-      <span class="field-label">how did you find me?</span>
-      <select id="serviceReferral"></select>
-    </label>
-    <label class="field">
-      <span class="field-label" id="serviceDetailLabel">details</span>
-      <textarea id="serviceDetail" rows="4" placeholder="Tell me more..."></textarea>
-    </label>
-    <div class="modal-actions">
+
+    <div class="step" data-step="3">
+      <label class="field">
+        <span class="field-label">how did you find me?</span>
+        <select id="serviceReferral"></select>
+      </label>
+      <label class="field">
+        <span class="field-label" id="serviceDetailLabel">details</span>
+        <textarea id="serviceDetail" rows="4" placeholder="Tell me more..."></textarea>
+      </label>
+    </div>
+
+    <div class="modal-nav">
+      <button type="button" class="cta" id="svBack" hidden>← back</button>
+      <button type="button" class="cta" id="svNext">continue →</button>
+    </div>
+    <div class="modal-actions" hidden>
       <button type="button" class="cta cta--mail" id="serviceMail">email →</button>
       <button type="button" class="cta cta--whatsapp" id="serviceWa">whatsapp →</button>
     </div>
@@ -1144,12 +1172,12 @@
       detailLabel: "the idea",
       detailPlaceholder: "What should the app do? Who is it for? Tell me the problem it solves.",
       packages: [
-        { v: "idea → mvp", p: "from $500 · 2–4 wks", blurb: "design, build, app store setup" },
-        { v: "full app", p: "from $1,200 · 4–8 wks", blurb: "everything in mvp + advanced features & backend" },
-        { v: "care & updates", p: "from $100/mo", blurb: "bug fixes, updates, small tweaks" },
+        { v: "idea → mvp", p: "from $250 · 2–4 wks", blurb: "design, build, app store setup" },
+        { v: "full app", p: "from $600 · 4–8 wks", blurb: "everything in mvp + advanced features & backend" },
+        { v: "care & updates", p: "from $50/mo", blurb: "bug fixes, updates, small tweaks" },
         { v: "not sure — help me pick", p: "", blurb: "we'll figure it out together on a quick call" }
       ],
-      budgets: ["< $500", "$500 – $1,200", "$1,200 – $3,000", "$3,000+", "let's discuss"],
+      budgets: ["< $250", "$250 – $600", "$600 – $1,500", "$1,500+", "let's discuss"],
       timelines: ["asap", "~1 month", "1–3 months", "flexible"]
     },
     content: {
@@ -1157,12 +1185,12 @@
       detailLabel: "your brand / goal",
       detailPlaceholder: "What's your brand, niche or goal? Who is your audience?",
       packages: [
-        { v: "strategy only", p: "from $150 · 1 mo", blurb: "positioning, audience + 1-month content plan" },
-        { v: "strategy + content", p: "from $300/mo", blurb: "plan + hooks, scripts and ready-to-post content" },
-        { v: "ongoing brand", p: "from $600/mo", blurb: "a monthly content engine that grows your brand" },
+        { v: "strategy only", p: "from $100 · 1 mo", blurb: "positioning, audience + 1-month content plan" },
+        { v: "strategy + content", p: "from $200/mo", blurb: "plan + hooks, scripts and ready-to-post content" },
+        { v: "ongoing brand", p: "from $350/mo", blurb: "a monthly content engine that grows your brand" },
         { v: "not sure — help me pick", p: "", blurb: "we'll figure it out together on a quick call" }
       ],
-      budgets: ["< $150/mo", "$150 – $300/mo", "$300 – $600/mo", "$600+/mo", "let's discuss"],
+      budgets: ["< $100/mo", "$100 – $200/mo", "$200 – $350/mo", "$350+/mo", "let's discuss"],
       timelines: ["1 month", "3 months", "6+ months", "flexible"]
     }
   };
@@ -1180,6 +1208,26 @@
   const svPacks = document.getElementById("servicePacks");
   let serviceKind = "app";
   let pickedPack = null;
+  let svStep = 1;
+  const svSteps = document.querySelectorAll("#serviceModal .step");
+  const svDots = document.querySelectorAll("#svDots .step-dot");
+  const svBack = document.getElementById("svBack");
+  const svNext = document.getElementById("svNext");
+  const svActions = document.getElementById("serviceModal").querySelector(".modal-actions");
+
+  function goStep(n){
+    svStep = Math.min(3, Math.max(1, n));
+    Array.prototype.forEach.call(svSteps, (s, i) => s.classList.toggle("is-on", i === svStep - 1));
+    Array.prototype.forEach.call(svDots, (d, i) => {
+      d.classList.toggle("is-on", i === svStep - 1);
+      d.classList.toggle("is-done", i < svStep - 1);
+    });
+    svBack.hidden = svStep === 1;
+    svNext.hidden = svStep === 3;
+    svActions.hidden = svStep !== 3;
+  }
+  svBack.addEventListener("click", () => goStep(svStep - 1));
+  svNext.addEventListener("click", () => goStep(svStep + 1));
 
   function fillSelect(sel, options){
     sel.innerHTML = options.map(o =>
@@ -1209,6 +1257,7 @@
     fillSelect(svTimeline, cfg.timelines);
     fillSelect(svReferral, REFERRALS);
     buildPills(cfg);
+    goStep(1);
     svModal.hidden = false;
     requestAnimationFrame(() => svModal.classList.add("open"));
   }
