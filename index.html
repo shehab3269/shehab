@@ -35,7 +35,6 @@
 <meta name="twitter:image:alt" content="Shehab Medhat — Flutter developer and content creator portfolio">
 
 <meta name="theme-color" content="#101c17">
-<link rel="icon" href="https://shehab-medhat.site/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="https://shehab-medhat.site/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="https://shehab-medhat.site/apple-touch-icon.png">
 <link rel="sitemap" type="application/xml" href="https://shehab-medhat.site/sitemap.xml">
@@ -267,11 +266,35 @@
     font-size: 15px;
     max-width: 720px;
   }
+  .titlebar-logo{
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: block;
+    flex-shrink: 0;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 4px 0 2px 22px;
+  }
+  .brand .avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 6px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+  }
   h1{
     font-family: 'JetBrains Mono', monospace;
     font-size: 26px;
     font-weight: 700;
-    margin: 4px 0 2px 22px;
+    margin: 0;
     color: var(--text);
     letter-spacing: -0.5px;
   }
@@ -751,7 +774,7 @@
   @media (max-width: 480px){
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
-    .line, .out, h1, .role, .tags, .links, .footer, .projects, .cta-row, .services, .meeting-row{ margin-left: 0; }
+    .line, .out, .brand, h1, .role, .tags, .links, .footer, .projects, .cta-row, .services, .meeting-row{ margin-left: 0; }
     .service-cta{ width: 100%; justify-content: center; }
   }
   @media (prefers-reduced-motion: reduce){
@@ -797,6 +820,7 @@
     <span class="dot r"></span>
     <span class="dot y"></span>
     <span class="dot g"></span>
+    <img class="titlebar-logo" src="https://shehab-medhat.site/shehab-logo.png" alt="Shehab Medhat logo" width="20" height="20">
     <span>sm@shehab-medhat.site</span>
     <span class="titlebar-right">
       <span class="status"><span class="status-dot"></span>online</span>
@@ -809,7 +833,10 @@
   <div class="content">
     <p class="comment"># welcome — feel free to look around</p>
     <div class="line"><span class="prompt">$</span><span class="cmd">whoami</span></div>
-    <h1>Shehab Medhat <span class="alias">(shijz)</span><span class="cursor"></span></h1>
+    <div class="brand">
+      <img class="avatar" src="https://shehab-medhat.site/shehab-logo.png" alt="Shehab Medhat logo" width="64" height="64">
+      <h1>Shehab Medhat <span class="alias">(shijz)</span><span class="cursor"></span></h1>
+    </div>
     <p class="role">fullstack mobile developer & content creator · I ship apps and grow brands</p>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat stack.txt</span></div>
