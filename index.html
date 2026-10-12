@@ -1085,6 +1085,158 @@
     color: var(--text-muted);
     line-height: 1.5;
   }
+  :root{
+    --sp-sm: 10px;
+    --sp-md: 16px;
+    --sp-lg: 24px;
+    --sp-xl: 34px;
+  }
+  .quicknav{
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 0 0 18px 0;
+  }
+  .quicknav a{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 11px;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+  .quicknav a:hover{ color: var(--accent); border-color: var(--accent); background: rgba(232,163,61,.06); }
+  [id^="s-"], #termShell{ scroll-margin-top: 24px; }
+  .avail{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 4px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #63d391;
+    border: 1px solid rgba(99,211,145,.35);
+    background: rgba(99,211,145,.06);
+    border-radius: 20px;
+    padding: 5px 12px;
+  }
+  .avail-dot{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #63d391;
+    animation: availPulse 2s ease-out infinite;
+  }
+  @keyframes availPulse{
+    0%{ box-shadow: 0 0 0 0 rgba(99,211,145,.55); }
+    70%{ box-shadow: 0 0 0 8px rgba(99,211,145,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(99,211,145,0); }
+  }
+  .content .line{
+    margin-top: var(--sp-xl);
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .comment + .line{
+    margin-top: var(--sp-md);
+    padding-top: 0;
+    border-top: 0;
+  }
+  .sep{
+    height: 0;
+    margin: var(--sp-xl) 0 var(--sp-lg);
+    border-top: 1px solid var(--border);
+  }
+  .why{
+    width: calc(100% - 22px);
+    margin: 4px 0 0 22px;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    table-layout: fixed;
+  }
+  .why th, .why td{
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    word-break: break-word;
+  }
+  .why th{
+    font-size: 10.5px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .why td:first-child{ color: var(--text-muted); opacity: .8; }
+  .why td:last-child{ color: var(--text); }
+  .why th:last-child, .why td:last-child{ border-left: 1px solid var(--border); }
+  .reviews{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 10px;
+    margin: 4px 0 0 22px;
+  }
+  .review{
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: border-color .2s, transform .2s;
+  }
+  .review:hover{ border-color: var(--accent-soft); transform: translateY(-3px); }
+  .review-stars{ color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-bottom: 8px; }
+  .review-text{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 12px;
+  }
+  .review-meta{ display: flex; align-items: center; gap: 10px; }
+  .review-avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .review-who b{ display: block; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text); }
+  .review-who span{ font-family: 'IBM Plex Sans', sans-serif; font-size: 11.5px; color: var(--text-muted); }
+  .wa-float{
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 12;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #25D366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 26px -10px rgba(37,211,102,.7);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .wa-float svg{ width: 28px; height: 28px; }
+  .wa-float:hover{ transform: translateY(-3px) scale(1.04); box-shadow: 0 16px 30px -10px rgba(37,211,102,.85); }
+  html[dir="rtl"] .avail, html[dir="rtl"] .why, html[dir="rtl"] .reviews{ margin-left: 0; margin-right: 22px; }
+  html[dir="rtl"] .why th, html[dir="rtl"] .why td{ text-align: right; }
+  html[dir="rtl"] .why th:last-child, html[dir="rtl"] .why td:last-child{ border-left: 0; border-right: 1px solid var(--border); }
+  html[dir="rtl"] .wa-float{ right: auto; left: 18px; }
+  @media (prefers-reduced-motion: reduce){
+    .avail-dot{ animation: none; }
+  }
   .term-shell{
     margin: 6px 0 10px 22px;
     border: 1px solid var(--border);
@@ -1187,15 +1339,17 @@
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
     .brand, .out, .role, .tags, .links, .footer, .projects, .cta-row, .services,
-    .process, .numbers, .content-grid, .meeting-row, .path-choose, .system, .sys-intro, .term-shell{ margin-left: 0; }
+    .process, .numbers, .content-grid, .meeting-row, .path-choose, .system, .sys-intro, .term-shell,
+    .why, .reviews, .avail{ margin-left: 0; }
     html[dir="rtl"] .brand, html[dir="rtl"] .out, html[dir="rtl"] .role, html[dir="rtl"] .tags,
     html[dir="rtl"] .links, html[dir="rtl"] .footer, html[dir="rtl"] .projects,
     html[dir="rtl"] .cta-row, html[dir="rtl"] .services, html[dir="rtl"] .process,
     html[dir="rtl"] .numbers, html[dir="rtl"] .content-grid, html[dir="rtl"] .meeting-row,
     html[dir="rtl"] .path-choose, html[dir="rtl"] .system, html[dir="rtl"] .sys-intro,
-    html[dir="rtl"] .term-shell{
+    html[dir="rtl"] .term-shell, html[dir="rtl"] .why, html[dir="rtl"] .reviews, html[dir="rtl"] .avail{
       margin-right: 0;
     }
+    .why{ width: 100%; }
     .service-cta{ width: 100%; justify-content: center; }
     .path-opt{ min-width: 100%; }
     .avatar{ width: 54px; height: 54px; }
@@ -1263,6 +1417,16 @@
   </div>
 
   <div class="content">
+    <nav class="quicknav" id="quicknav" aria-label="Sections">
+      <a href="#s-about" data-i18n="navAbout">about</a>
+      <a href="#s-projects" data-i18n="navProjects">projects</a>
+      <a href="#s-services" data-i18n="navServices">services</a>
+      <a href="#s-why" data-i18n="navWhy">why me</a>
+      <a href="#s-reviews" data-i18n="navReviews">reviews</a>
+      <a href="#s-contact" data-i18n="navContact">contact</a>
+      <a href="#termShell" data-i18n="navTerminal">terminal</a>
+    </nav>
+
     <p class="comment" data-i18n="comment"># welcome — look around, pick a language, say hi</p>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">whoami</span></div>
@@ -1289,6 +1453,11 @@
       <span class="path-note" data-i18n="pathBoth">skip it? you'll see both — order follows your pick.</span>
     </div>
 
+    <div class="avail reveal">
+      <span class="avail-dot"></span>
+      <span data-i18n="avail">available for new projects</span>
+    </div>
+
     <div class="line"><span class="prompt">$</span><span class="cmd">cat stack.txt</span></div>
     <h2 class="sr-only" data-i18n="srStack">Technical skills</h2>
     <div class="tags">
@@ -1311,7 +1480,7 @@
       <span class="tag">System design</span>
     </div>
 
-    <div class="line"><span class="prompt">$</span><span class="cmd">cat about.txt</span></div>
+    <div class="line" id="s-about"><span class="prompt">$</span><span class="cmd">cat about.txt</span></div>
     <h2 class="sr-only" data-i18n="srAbout">About</h2>
     <p class="out" data-i18n="about">I've been building with Flutter since 2023 — I build complete mobile products end to end (UI, backend APIs, MongoDB, stores) and I'm also a content creator who documents every build. So when you bring me an idea, I don't just ship the app. I help it get seen.</p>
 
@@ -1319,7 +1488,7 @@
     <h2 class="sr-only" data-i18n="srStats">Metrics</h2>
     <div class="numbers reveal" id="numbersRow"></div>
 
-    <div class="line"><span class="prompt">$</span><span class="cmd" data-i18n="projectsCmd">ls projects/</span></div>
+    <div class="line" id="s-projects"><span class="prompt">$</span><span class="cmd" data-i18n="projectsCmd">ls projects/</span></div>
     <h2 class="sr-only" data-i18n="srProjects">Projects</h2>
     <div class="projects reveal" id="projectsRow"></div>
 
@@ -1327,7 +1496,7 @@
     <h2 class="sr-only" data-i18n="srProcess">How I work</h2>
     <div class="process reveal" id="processRow"></div>
 
-    <div class="line"><span class="prompt">$</span><span class="cmd">cat services.txt</span></div>
+    <div class="line" id="s-services"><span class="prompt">$</span><span class="cmd">cat services.txt</span></div>
     <h2 class="sr-only" data-i18n="srServices">Services and packages</h2>
     <div class="services reveal" id="servicesRow"></div>
 
@@ -1336,16 +1505,26 @@
     <p class="sys-intro reveal" data-i18n="sysIntro">the part that makes working with me boring-safe</p>
     <div class="system reveal" id="systemRow"></div>
 
-    <div class="line"><span class="prompt">$</span><span class="cmd">cat creator.txt</span></div>
-    <h2 class="sr-only" data-i18n="srCreator">As a creator</h2>
+    <div class="line" id="s-why"><span class="prompt">$</span><span class="cmd">cat why_me.txt</span></div>
+    <h2 class="sr-only" data-i18n="srWhy">Why work with me</h2>
+    <table class="why reveal">
+      <thead><tr><th data-i18n="whyThem">typical</th><th data-i18n="whyMe">with me</th></tr></thead>
+      <tbody id="whyBody"></tbody>
+    </table>
+
+    <div class="sep" id="s-creator"></div>
     <div class="content-grid reveal" id="creatorRow"></div>
+
+    <div class="line" id="s-reviews"><span class="prompt">$</span><span class="cmd">cat reviews.txt</span></div>
+    <h2 class="sr-only" data-i18n="srReviews">Reviews</h2>
+    <div class="reviews reveal" id="reviewsRow"></div>
 
     <div class="line" style="margin-top:24px;"><span class="prompt">$</span><span class="cmd">book_a_call.sh</span></div>
     <div class="meeting-row reveal">
       <button type="button" class="cta cta--whatsapp" id="meetingBtn">book a 15-min intro call →</button>
     </div>
 
-    <div class="line"><span class="prompt">$</span><span class="cmd">cat contact.txt</span></div>
+    <div class="line" id="s-contact"><span class="prompt">$</span><span class="cmd">cat contact.txt</span></div>
     <h2 class="sr-only" data-i18n="srContact">Contact</h2>
     <div class="links reveal">
       <a href="mailto:sm@shehab-medhat.site">Email</a>
@@ -1367,7 +1546,6 @@
       <span class="followers-label" data-i18n="followersLabel">followers across all platforms</span>
     </div>
 
-    <div class="line" style="margin-top:26px;"><span class="prompt">$</span><span class="cmd">./shell.sh</span> <span class="term-tag" data-i18n="shellHint">— type a command, hit enter</span></div>
     <div class="term-shell reveal" id="termShell">
       <div class="term-log" id="termLog" aria-live="polite" aria-label="Terminal output"></div>
       <div class="term-inputrow">
@@ -1386,6 +1564,10 @@
     </div>
   </div>
 </main>
+
+<a class="wa-float" href="https://wa.me/201032696923" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01zM12.04 20.15h-.004a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.83 2.42 8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01s-.43.06-.66.31c-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18z"/></svg>
+</a>
 
 <div class="modal" id="contactModal" hidden>
   <div class="modal-backdrop" data-close></div>
@@ -1512,7 +1694,7 @@
     followers: 32000,   // fallback until /api/followers is live
     apps: 2,            // apps shipped
     strategies: 3,      // content strategies delivered
-    videos: 15          // content pieces produced
+    videos: 99          // content pieces produced
   };
   const MT_TIMES = ["10:00", "11:00", "12:00", "14:00", "16:00", "18:00"];
   const CONTACT = {
@@ -1577,6 +1759,30 @@
         { t: "launch checklist", d: "Store assets, release notes, checklist — everything ships clean." },
         { t: "support window", d: "A window after launch to squash anything that comes up." }
       ],
+      avail: "available for new projects",
+      navAbout: "about",
+      navProjects: "projects",
+      navServices: "services",
+      navWhy: "why me",
+      navReviews: "reviews",
+      navContact: "contact",
+      navTerminal: "terminal",
+      srWhy: "Why work with me",
+      whyThem: "typical",
+      whyMe: "with me",
+      why: [
+        { them: "app and content handled by two teams who never talk", me: "one person ships the app and the content around it" },
+        { them: "a vague price that grows as you go", me: "scope, price and dates written before we start" },
+        { them: "you have to chase for updates", me: "clear milestones — you always know where it stands" },
+        { them: "launch day arrives in silence", me: "content built around launch, so day one lands" },
+        { them: "support stops the moment you pay up", me: "a support window after launch to fix what shows up" }
+      ],
+      srReviews: "Reviews",
+      reviews: [
+        { stars: "★★★★★", text: "Placeholder — replace with a real quote about the app build and how the process felt.", name: "Client name", role: "founder, startup" },
+        { stars: "★★★★★", text: "Placeholder — replace with a real quote about the content strategy and the results.", name: "Client name", role: "brand owner" },
+        { stars: "★★★★★", text: "Placeholder — replace with a real quote about working together end to end.", name: "Client name", role: "creator" }
+      ],
       metaDesc: "Shehab Medhat (shijz) — Flutter fullstack mobile developer & content creator. Builds mobile apps end to end and creates content strategies that grow brands. Flutter, Dart, TypeScript, MongoDB.",
       about: "I've been creating content since 2022 and building with Flutter since 2023 — I build complete mobile products end to end (UI, backend APIs, MongoDB, stores) and I document every build. So when you bring me an idea, I don't just ship the app. I help it get seen.",
       projectsCmd: "ls projects/",
@@ -1584,7 +1790,7 @@
       numbers: [
         { n: "2", l: "apps shipped" },
         { n: "3", l: "content strategies" },
-        { n: "15", l: "content pieces" }
+        { n: "99+", l: "videos published" }
       ],
       projects: [
         { name: "codeq", tag: "EdTech · Community", desc: "Programming education with a community layer — courses, challenges and discussion in one product, built from the ground up.", tech: ["Flutter", "Dart", "REST API", "MongoDB"] },
@@ -1617,7 +1823,7 @@
         { v: "ongoing brand", p: "from $350/mo", blurb: "a monthly content engine that grows your brand" },
         { v: "not sure — help me pick", p: "", blurb: "we'll figure it out together on a quick call" }
       ],
-      creatorIntro: "I'm also the creator behind every build — documenting the process, shipping the story with the product.",
+      creatorIntro: "I'm also the creator behind every build — 99+ videos since 2022, documenting the process and shipping the story with the product.",
       creator: [
         { platform: "YouTube", title: "I build an app from zero — the whole process on camera" },
         { platform: "TikTok", title: "why I document every build (and you should too)" },
@@ -1691,7 +1897,7 @@
       termOpenedForm: "opening…",
       termWhoami: "shehab medhat (shijz) — flutter fullstack dev & content creator",
       termFileMissing: "cat: no such file",
-      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   services.txt   system.txt",
+      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   reviews.txt   services.txt   system.txt   why_me.txt",
       termSudo: "nice try — this shell is read-only.",
       termDuck: "quack. (a duck waddled across the screen)",
       termLangUsage: "usage: lang ar | lang en",
@@ -1702,6 +1908,8 @@
         ["services", "packages & prices"],
         ["process", "how i work"],
         ["system", "how we keep it clean"],
+        ["why", "why work with me"],
+        ["reviews", "what people say"],
         ["creator", "content i make"],
         ["contact", "how to reach me"],
         ["book", "book a 15-min call"],
@@ -1746,6 +1954,30 @@
         { t: "ليستة الإطلاق", d: "صور المتاجر، ملاحظات الإصدار، الليستة — كل حاجة طالعة نظيفة" },
         { t: "فترة دعم", d: "فترة بعد الإطلاق نصلّح فيها أي حاجة تظهر" }
       ],
+      avail: "متاح لمشاريع جديدة",
+      navAbout: "عني",
+      navProjects: "المشاريع",
+      navServices: "الخدمات",
+      navWhy: "ليه أنا",
+      navReviews: "آراء",
+      navContact: "تواصل",
+      navTerminal: "التيرمنال",
+      srWhy: "ليه تشتغل معايا",
+      whyThem: "العادي",
+      whyMe: "معايا",
+      why: [
+        { them: "التطبيق والمحتوى بيتعملوا من فريقين مش بيتكلموا", me: "شخص واحد بيعمل التطبيق والمحتوى اللي حواليه" },
+        { them: "سعر مبهم بيكبر وانت ماشي", me: "نطاق وسعر ومواعيد مكتوبة قبل ما نبدأ" },
+        { them: "بتجري وراهم على أي تحديث", me: "مراحل واضحة — دايمًا عارف انت واقف فين" },
+        { them: "يوم الإطلاق بيعدّي في السكوت", me: "المحتوى متبني حوالين الإطلاق، فأول يوم بيفرق" },
+        { them: "الدعم بيقف أول ما تدفع", me: "فترة دعم بعد الإطلاق نصلّح فيها أي حاجة تظهر" }
+      ],
+      srReviews: "الآراء",
+      reviews: [
+        { stars: "★★★★★", text: "مبدئي — استبدله برأي عميل حقيقي عن بناء التطبيق وتجربة الشغل.", name: "اسم العميل", role: "مؤسس شركة" },
+        { stars: "★★★★★", text: "مبدئي — استبدله برأي عميل حقيقي عن استراتيجية المحتوى والنتايج.", name: "اسم العميل", role: "صاحب براند" },
+        { stars: "★★★★★", text: "مبدئي — استبدله برأي عميل حقيقي عن الشغل من الأول لآخر.", name: "اسم العميل", role: "كريتور" }
+      ],
       metaDesc: "شهاب مدحت (shijz) — مطوّر فلاتر فول ستاك وصانع محتوى. ببني تطبيقات موبايل من الأول لآخر وبعمل استراتيجيات محتوى بتنمّي براندز. Flutter, Dart, TypeScript, MongoDB.",
       about: "بصنع محتوى من 2022 وبنبني بـ Flutter من 2023 — بعمل المنتج كامل من الأول لآخر (الواجهة، الـ APIs، MongoDB، والنشر)، وبوثّق كل مشروع. فلو جبّتلي فكرة، مش هعملها تطبيق بس — هساعدها تتشاف كمان.",
       projectsCmd: "ls projects/",
@@ -1753,7 +1985,7 @@
       numbers: [
         { n: "2", l: "تطبيقات أطلقتها" },
         { n: "3", l: "استراتيجيات محتوى" },
-        { n: "15", l: "قطعة محتوى" }
+        { n: "99+", l: "فيديو منشور" }
       ],
       projects: [
         { name: "codeq", tag: "تعليم · مجتمع", desc: "تعليم برمجة مع طبقة مجتمع — كورسات وتحديات ونقاش في منتج واحد، مبني من الصفر.", tech: ["Flutter", "Dart", "REST API", "MongoDB"] },
@@ -1786,7 +2018,7 @@
         { v: "براند مستمر", p: "من $350/شهر", blurb: "ماكينة محتوى شهرية بتنمّي براندك" },
         { v: "مش متأكد — ساعدني اختار", p: "", blurb: "هنحددها مبدئياً سوا في مكالمة سريعة" }
       ],
-      creatorIntro: "أنا كمان الكريتور اللي ورا كل منتج — بوثّق العملية وأنزّل القصة مع المنتج.",
+      creatorIntro: "أنا كمان الكريتور اللي ورا كل منتج — أكتر من ٩٩ فيديو من ٢٠٢٢، بوثّق العملية وأنزّل القصة مع المنتج.",
       creator: [
         { platform: "YouTube", title: "ببني تطبيق من الصفر — العملية كلها قدام الكاميرا" },
         { platform: "TikTok", title: "ليه بوثّق كل بيتا (وأنت كمان لازم)" },
@@ -1860,7 +2092,7 @@
       termOpenedForm: "بيتم الفتح…",
       termWhoami: "شهاب مدحت (shijz) — مطوّر فلاتر فول ستاك وصانع محتوى",
       termFileMissing: "cat: مفيش ملف بالاسم ده",
-      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   services.txt   system.txt",
+      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   reviews.txt   services.txt   system.txt   why_me.txt",
       termSudo: "محاولة حلوة — الطرفية دي للقراءة بس.",
       termDuck: "كويك. (بطة عدّت على الشاشة)",
       termLangUsage: "الاستخدام: lang ar | lang en",
@@ -1871,6 +2103,8 @@
         ["services", "الباقات والأسعار"],
         ["process", "طريقة شغلي"],
         ["system", "إزاي بنظبط الشغل"],
+        ["why", "ليه تشتغل معايا"],
+        ["reviews", "الناس بتقول إيه"],
         ["creator", "المحتوى اللي بعمله"],
         ["contact", "إزاي توصلني"],
         ["book", "احجز مكالمة ١٥ دقيقة"],
@@ -1963,6 +2197,25 @@
     ).join("");
   }
 
+  function renderWhy(){
+    document.getElementById("whyBody").innerHTML = t.why.map(r =>
+      "<tr><td>" + r.them + "</td><td>" + r.me + "</td></tr>"
+    ).join("");
+  }
+
+  function renderReviews(){
+    document.getElementById("reviewsRow").innerHTML = t.reviews.map(r =>
+      "<div class=\"review\">" +
+        "<div class=\"review-stars\">" + r.stars + "</div>" +
+        "<p class=\"review-text\">" + r.text + "</p>" +
+        "<div class=\"review-meta\">" +
+          "<span class=\"review-avatar\">" + r.name.charAt(0) + "</span>" +
+          "<span class=\"review-who\"><b>" + r.name + "</b><span>" + r.role + "</span></span>" +
+        "</div>" +
+      "</div>"
+    ).join("");
+  }
+
   let persona = "both";
   function applyPersona(){
     document.querySelectorAll("#servicesRow .service").forEach(c => {
@@ -1998,6 +2251,8 @@
     renderProcess();
     renderServices();
     renderSystem();
+    renderWhy();
+    renderReviews();
     applyPersona();
     renderCreator();
     buildTimes();
@@ -2288,6 +2543,8 @@
     "services.txt": () => { termPrintPkgs(t.pkgApp, t.serviceAppName); termPrintPkgs(t.pkgContent, t.serviceContentName); },
     "system.txt": () => t.sysPledges.forEach(p => { termPrint("• " + p.t, "ok"); termPrint("  " + p.d); }),
     "creator.txt": () => t.creator.forEach(c => termPrint("• " + c.platform + " — " + c.title)),
+    "why_me.txt": () => t.why.forEach(r => termPrint("• " + r.me, "ok")),
+    "reviews.txt": () => t.reviews.forEach(r => { termPrint("★ " + r.text); termPrint("  — " + r.name + ", " + r.role); }),
     "contact.txt": () => { termPrint(CONTACT.email, "ok"); termPrint("whatsapp: +" + CONTACT.whatsapp); }
   };
   function termHelpLines(){
@@ -2303,6 +2560,8 @@
     pricing: termFiles["services.txt"],
     process: termFiles["process.txt"],
     system: termFiles["system.txt"],
+    why: termFiles["why_me.txt"],
+    reviews: termFiles["reviews.txt"],
     creator: termFiles["creator.txt"],
     contact: termFiles["contact.txt"],
     book: () => { termPrint(t.termOpenedForm); openModal(mtModal); },
@@ -2323,6 +2582,7 @@
       const key = f.endsWith(".txt") ? f : f + ".txt";
       if(termFiles[key]) termFiles[key]();
       else if(f === "projects") termCommands.projects();
+      else if(f === "why") termFiles["why_me.txt"]();
       else termPrint(t.termFileMissing + ": " + (arg || ""), "err");
     }
   };
@@ -2342,7 +2602,7 @@
   function termRenderExamples(){
     if(!termExamples) return;
     const alt = (lang === "ar") ? "en" : "ar";
-    const items = ["help", "projects", "services", "book", "contact", "lang " + alt];
+    const items = ["help", "projects", "services", "why", "reviews", "book", "contact", "lang " + alt];
     termExamples.innerHTML = "";
     items.forEach(x => {
       const b = document.createElement("button");
