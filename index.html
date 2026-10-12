@@ -140,31 +140,6 @@
     0%,100%{ box-shadow: 0 30px 60px -25px rgba(0,0,0,.6), 0 0 0 rgba(69,209,253,0); }
     50%{ box-shadow: 0 30px 60px -25px rgba(0,0,0,.6), 0 0 50px rgba(69,209,253,.12); }
   }
-  .content > *{
-    animation: fadeUp .6s ease both;
-  }
-  .content > *:nth-child( 1){ animation-delay:.10s }
-  .content > *:nth-child( 2){ animation-delay:.16s }
-  .content > *:nth-child( 3){ animation-delay:.22s }
-  .content > *:nth-child( 4){ animation-delay:.28s }
-  .content > *:nth-child( 5){ animation-delay:.34s }
-  .content > *:nth-child( 6){ animation-delay:.40s }
-  .content > *:nth-child( 7){ animation-delay:.46s }
-  .content > *:nth-child( 8){ animation-delay:.52s }
-  .content > *:nth-child( 9){ animation-delay:.58s }
-  .content > *:nth-child(10){ animation-delay:.64s }
-  .content > *:nth-child(11){ animation-delay:.70s }
-  .content > *:nth-child(12){ animation-delay:.76s }
-  .content > *:nth-child(13){ animation-delay:.82s }
-  .content > *:nth-child(14){ animation-delay:.88s }
-  .content > *:nth-child(15){ animation-delay:.94s }
-  .content > *:nth-child(16){ animation-delay:1.00s }
-  .content > *:nth-child(17){ animation-delay:1.06s }
-  .content > *:nth-child(18){ animation-delay:1.12s }
-  @keyframes fadeUp{
-    from{ opacity:0; transform: translateY(14px); }
-    to{ opacity:1; transform: translateY(0); }
-  }
   .dot{
     animation: boop 1.6s ease-in-out infinite;
   }
@@ -847,6 +822,10 @@
   .modal-actions .cta--whatsapp:hover{ color:#63d391; border-color:#63d391; box-shadow: 0 10px 22px -12px rgba(99,211,145,.6); }
   .step{ display:none; }
   .step.is-on{ display:block; animation: fadeUp .28s ease; }
+  @keyframes fadeUp{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
   .steps-dots{ display:inline-flex; gap:6px; margin-right:8px; vertical-align:middle; }
   .step-dot{ width:8px; height:8px; border-radius:50%; background:transparent; border:1px solid var(--border); transition: background .2s, border-color .2s; }
   .step-dot.is-on{ background: var(--accent); border-color: var(--accent); }
@@ -920,6 +899,192 @@
     border-color: var(--accent-soft);
     box-shadow: 0 10px 24px -12px rgba(111,167,135,.7);
   }
+  .sky{
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .star{
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #fff;
+    animation: twinkle var(--tw, 3s) ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity: .15; }
+    50%{ opacity: 1; }
+  }
+  .meteor{
+    position: absolute;
+    width: 150px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(232,163,61,.85), transparent);
+    --mdeg: 135deg;
+    transform: rotate(var(--mdeg)) translateX(-60px) scaleX(0);
+    transform-origin: left center;
+    filter: drop-shadow(0 0 6px rgba(232,163,61,.55));
+    animation: meteorFall var(--md, 8s) linear infinite;
+    animation-delay: var(--mdd, 0s);
+  }
+  @keyframes meteorFall{
+    0%{ transform: rotate(var(--mdeg)) translateX(-60px) scaleX(0); opacity: 0; }
+    3%{ transform: rotate(var(--mdeg)) translateX(-60px) scaleX(1); opacity: 1; }
+    12%{ transform: rotate(var(--mdeg)) translateX(-30px) scaleX(1); opacity: 1; }
+    22%{ transform: rotate(var(--mdeg)) translateX(0px) scaleX(1); opacity: .5; }
+    30%{ transform: rotate(var(--mdeg)) translateX(40vw) scaleX(1); opacity: 0; }
+    100%{ transform: rotate(var(--mdeg)) translateX(40vw) scaleX(1); opacity: 0; }
+  }
+  html[dir="rtl"] .sky{ --mdeg: -135deg; }
+  .reveal{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-in{
+    opacity: 1;
+    transform: none;
+  }
+  .path-choose{
+    margin: 6px 0 22px 22px;
+  }
+  .path-q{
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .path-opts{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .path-opt{
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    text-align: left;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color .2s, background .2s, transform .2s, box-shadow .2s;
+  }
+  .path-opt:hover{
+    border-color: var(--accent-soft);
+    transform: translateY(-3px);
+  }
+  .path-opt.is-on{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent) inset, 0 12px 26px -14px rgba(232,163,61,.5);
+  }
+  .path-opt svg{
+    width: 22px;
+    height: 22px;
+  }
+  .path-opt b{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .path-opt em{
+    font-style: normal;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  .path-note{
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    opacity: .8;
+  }
+  .persona-float{
+    position: fixed;
+    left: 18px;
+    bottom: 18px;
+    z-index: 10;
+    display: flex;
+    gap: 4px;
+    background: rgba(23,37,30,.9);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 4px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.6);
+  }
+  .float-btn{
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+  .float-btn:hover{ color: var(--accent); }
+  .float-btn.is-on{
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .service.primary{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent) inset, 0 14px 30px -18px rgba(232,163,61,.5);
+  }
+  .system{
+    margin: 0 0 26px 22px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 10px;
+  }
+  .sys-intro{
+    margin: 4px 0 14px 22px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    max-width: 720px;
+  }
+  .pledge{
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 6px;
+    padding: 12px 14px;
+    transition: border-color .2s, transform .2s;
+  }
+  .pledge:hover{
+    border-color: var(--accent-soft);
+    transform: translateY(-3px);
+  }
+  .pledge b{
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .pledge i{
+    display: block;
+    font-style: normal;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
   html[dir="rtl"] .content{ text-align: right; }
   html[dir="rtl"] .line, html[dir="rtl"] .prompt, html[dir="rtl"] .cmd{ unicode-bidi: plaintext; }
   html[dir="rtl"] .out, html[dir="rtl"] .brand, html[dir="rtl"] .role,
@@ -932,11 +1097,15 @@
   }
   html[dir="rtl"] .titlebar-right{ margin-left: 0; margin-right: auto; }
   html[dir="rtl"] .modal-actions .cta{ text-align: right; }
+  html[dir="rtl"] .path-choose, html[dir="rtl"] .system, html[dir="rtl"] .sys-intro{ margin-left: 0; margin-right: 22px; }
+  html[dir="rtl"] .path-opt, html[dir="rtl"] .float-btn{ text-align: right; }
+  html[dir="rtl"] .persona-float{ left: auto; right: 18px; }
   @media (max-width: 520px){
     .field-row{ grid-template-columns: 1fr; }
   }
   @media (max-width: 900px){
     .duck{ display: none; }
+    .persona-float{ display: none; }
     .titlebar{ gap: 8px; }
     .titlebar-right{ margin-left: 0; width: 100%; justify-content: flex-start; }
     html[dir="rtl"] .titlebar-right{ margin-right: 0; }
@@ -945,21 +1114,25 @@
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
     .brand, .out, .role, .tags, .links, .footer, .projects, .cta-row, .services,
-    .process, .numbers, .content-grid, .meeting-row{ margin-left: 0; }
+    .process, .numbers, .content-grid, .meeting-row, .path-choose, .system, .sys-intro{ margin-left: 0; }
     html[dir="rtl"] .brand, html[dir="rtl"] .out, html[dir="rtl"] .role, html[dir="rtl"] .tags,
     html[dir="rtl"] .links, html[dir="rtl"] .footer, html[dir="rtl"] .projects,
     html[dir="rtl"] .cta-row, html[dir="rtl"] .services, html[dir="rtl"] .process,
-    html[dir="rtl"] .numbers, html[dir="rtl"] .content-grid, html[dir="rtl"] .meeting-row{
+    html[dir="rtl"] .numbers, html[dir="rtl"] .content-grid, html[dir="rtl"] .meeting-row,
+    html[dir="rtl"] .path-choose, html[dir="rtl"] .system, html[dir="rtl"] .sys-intro{
       margin-right: 0;
     }
     .service-cta{ width: 100%; justify-content: center; }
+    .path-opt{ min-width: 100%; }
     .avatar{ width: 54px; height: 54px; }
   }
   @media (prefers-reduced-motion: reduce){
-    .terminal, .content > *, .dot, .status-dot, .flutter-badge, .duck, .ambient{
+    .terminal, .content > *, .dot, .status-dot, .flutter-badge, .duck, .ambient, .star, .meteor{
       animation: none !important;
       transition: none !important;
     }
+    .sky{ display: none; }
+    .reveal{ opacity: 1 !important; transform: none !important; }
     .cursor{ animation: none; }
   }
 </style>
@@ -967,6 +1140,7 @@
 <body>
 
 <div class="ambient" aria-hidden="true"></div>
+<div class="sky" id="sky" aria-hidden="true"></div>
 
 <div class="duck duck--left" aria-hidden="true">
   <svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg">
@@ -1024,6 +1198,23 @@
     </div>
     <p class="role" data-i18n="role">fullstack mobile developer & content creator · I ship apps, then help them get seen</p>
 
+    <div class="path-choose reveal" id="pathChoose">
+      <span class="path-q" data-i18n="pathQ">what are you here for?</span>
+      <div class="path-opts">
+        <button type="button" class="path-opt" data-path="app">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#45D1FD" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><line x1="10.8" y1="5.2" x2="13.2" y2="5.2"/><line x1="11" y1="18.3" x2="13" y2="18.3"/></svg>
+          <b data-i18n="pathAppT">an app</b>
+          <em data-i18n="pathAppD">idea → built app, end to end</em>
+        </button>
+        <button type="button" class="path-opt" data-path="content">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h1.6L14 19V5L5.6 10H4a1 1 0 0 0-1 1z"/><path d="M16.5 9a4.2 4.2 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/><path d="M14 12h3"/></svg>
+          <b data-i18n="pathContentT">content</b>
+          <em data-i18n="pathContentD">grow a brand that gets seen</em>
+        </button>
+      </div>
+      <span class="path-note" data-i18n="pathBoth">skip it? you'll see both — order follows your pick.</span>
+    </div>
+
     <div class="line"><span class="prompt">$</span><span class="cmd">cat stack.txt</span></div>
     <h2 class="sr-only" data-i18n="srStack">Technical skills</h2>
     <div class="tags">
@@ -1052,32 +1243,37 @@
 
     <div class="line"><span class="prompt">$</span><span class="cmd" data-i18n="metricsCmd">cat metrics.txt</span></div>
     <h2 class="sr-only" data-i18n="srStats">Metrics</h2>
-    <div class="numbers" id="numbersRow"></div>
+    <div class="numbers reveal" id="numbersRow"></div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd" data-i18n="projectsCmd">ls projects/</span></div>
     <h2 class="sr-only" data-i18n="srProjects">Projects</h2>
-    <div class="projects" id="projectsRow"></div>
+    <div class="projects reveal" id="projectsRow"></div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat process.txt</span></div>
     <h2 class="sr-only" data-i18n="srProcess">How I work</h2>
-    <div class="process" id="processRow"></div>
+    <div class="process reveal" id="processRow"></div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat services.txt</span></div>
     <h2 class="sr-only" data-i18n="srServices">Services and packages</h2>
-    <div class="services" id="servicesRow"></div>
+    <div class="services reveal" id="servicesRow"></div>
+
+    <div class="line"><span class="prompt">$</span><span class="cmd" data-i18n="sysCmd">cat system.txt</span></div>
+    <h2 class="sr-only" data-i18n="srSystem">How we keep it clear</h2>
+    <p class="sys-intro reveal" data-i18n="sysIntro">the part that makes working with me boring-safe</p>
+    <div class="system reveal" id="systemRow"></div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat creator.txt</span></div>
     <h2 class="sr-only" data-i18n="srCreator">As a creator</h2>
-    <div class="content-grid" id="creatorRow"></div>
+    <div class="content-grid reveal" id="creatorRow"></div>
 
     <div class="line" style="margin-top:24px;"><span class="prompt">$</span><span class="cmd">book_a_call.sh</span></div>
-    <div class="meeting-row">
-      <button type="button" class="cta cta--whatsapp" id="meetingBtn" data-i18n="mtBtn">book a 15-min intro call →</button>
+    <div class="meeting-row reveal">
+      <button type="button" class="cta cta--whatsapp" id="meetingBtn">book a 15-min intro call →</button>
     </div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat contact.txt</span></div>
     <h2 class="sr-only" data-i18n="srContact">Contact</h2>
-    <div class="links">
+    <div class="links reveal">
       <a href="mailto:sm@shehab-medhat.site">Email</a>
       <a href="https://www.linkedin.com/in/shehab-medhat-0b32b7321/" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://www.facebook.com/Shehabmedhatt/" target="_blank" rel="noopener">Facebook</a>
@@ -1092,12 +1288,18 @@
 
     <div class="line" style="margin-top:26px;"><span class="prompt">$</span><span class="cmd">cat followers.txt</span></div>
     <h2 class="sr-only" data-i18n="srFollowers">Followers</h2>
-    <div class="followers">
+    <div class="followers reveal">
       <span class="followers-count" id="followersCount">0</span>
       <span class="followers-label" data-i18n="followersLabel">followers across all platforms</span>
     </div>
 
     <div class="footer">sm@shehab-medhat.site:~$ <span style="opacity:.6">_</span></div>
+
+    <div class="persona-float" role="group" aria-label="Track">
+      <button type="button" class="float-btn" data-path="app" data-i18n="floatApps">apps</button>
+      <button type="button" class="float-btn" data-path="both" data-i18n="floatBoth">both</button>
+      <button type="button" class="float-btn" data-path="content" data-i18n="floatContent">content</button>
+    </div>
   </div>
 </main>
 
@@ -1234,6 +1436,27 @@
     whatsapp: "201032696923"
   };
 
+  // ----- sky: stars + falling meteors -----
+  (function makeSky(){
+    const sky = document.getElementById("sky");
+    if(!sky) return;
+    const frag = document.createDocumentFragment();
+    for(let i = 0; i < 26; i++){
+      const s = document.createElement("span");
+      s.className = "star";
+      const size = (Math.random() * 1.6 + 1).toFixed(1);
+      s.style.cssText = "left:" + (Math.random()*100).toFixed(1) + "vw;top:" + (Math.random()*100).toFixed(1) + "vh;width:" + size + "px;height:" + size + "px;--tw:" + (Math.random()*4+2).toFixed(1) + "s;animation-delay:" + (Math.random()*5).toFixed(1) + "s";
+      frag.appendChild(s);
+    }
+    for(let i = 0; i < 5; i++){
+      const m = document.createElement("div");
+      m.className = "meteor";
+      m.style.cssText = "top:" + (Math.random()*70+5).toFixed(1) + "vh;left:" + (Math.random()*55+5).toFixed(1) + "vw;--md:" + (Math.random()*7+5).toFixed(1) + "s;--mdd:" + (Math.random()*13).toFixed(1) + "s";
+      frag.appendChild(m);
+    }
+    sky.appendChild(frag);
+  })();
+
   // ----- i18n -----
   const I18N = {
     en: {
@@ -1251,8 +1474,27 @@
       srCreator: "As a creator",
       srContact: "Contact",
       srFollowers: "Followers",
+      pathQ: "what are you here for?",
+      pathAppT: "an app",
+      pathAppD: "idea → built app, end to end",
+      pathContentT: "content",
+      pathContentD: "grow a brand that gets seen",
+      pathBoth: "skip it? you'll see both — order follows your pick.",
+      floatApps: "apps",
+      floatBoth: "both",
+      floatContent: "content",
+      sysCmd: "cat system.txt",
+      srSystem: "How we keep it clear",
+      sysIntro: "the part that makes working with me boring-safe: official, written, organised.",
+      sysPledges: [
+        { t: "written scope + quote", d: "Before we start, you get scope, price and dates in writing." },
+        { t: "milestone schedule", d: "Work is split with clear dates — you see progress, not surprises." },
+        { t: "2 revision rounds", d: "Included in every package. Clarity is built into the price." },
+        { t: "launch checklist", d: "Store assets, release notes, checklist — everything ships clean." },
+        { t: "support window", d: "A window after launch to squash anything that comes up." }
+      ],
       metaDesc: "Shehab Medhat (shijz) — Flutter fullstack mobile developer & content creator. Builds mobile apps end to end and creates content strategies that grow brands. Flutter, Dart, TypeScript, MongoDB.",
-      about: "I've been building with Flutter since 2023 — I build complete mobile products end to end (UI, backend APIs, MongoDB, stores) and I'm also a content creator who documents every build. So when you bring me an idea, I don't just ship the app. I help it get seen.",
+      about: "I've been creating content since 2022 and building with Flutter since 2023 — I build complete mobile products end to end (UI, backend APIs, MongoDB, stores) and I document every build. So when you bring me an idea, I don't just ship the app. I help it get seen.",
       projectsCmd: "ls projects/",
       metricsCmd: "cat metrics.txt",
       numbers: [
@@ -1298,6 +1540,8 @@
         { platform: "Instagram", title: "a 30-day content strategy in one reel" }
       ],
       mtBtn: "book a 15-min intro call →",
+      mtBtnApp: "book a call about your app →",
+      mtBtnContent: "book a call about your content →",
       sayCta: "$ ./say_hi.sh →",
       followersLabel: "followers across all platforms",
       hiNameL: "your name",
@@ -1370,8 +1614,27 @@
       srCreator: "كصانع محتوى",
       srContact: "تواصل",
       srFollowers: "المتابعين",
+      pathQ: "زهقت إيه بالتحديد؟",
+      pathAppT: "تطبيق",
+      pathAppD: "من الفكرة لحد التطبيق الجاهز",
+      pathContentT: "محتوى",
+      pathContentD: "تكبر علامة أو شخصية بيتشاف",
+      pathBoth: "مش فاضي؟ هتشوف الاتنين — الترتيب بيتبع اختيارك",
+      floatApps: "تطبيقات",
+      floatBoth: "الاثنين",
+      floatContent: "محتوى",
+      sysCmd: "cat system.txt",
+      srSystem: "إزاي الشغل بيتظبط",
+      sysIntro: "الجزء اللي بيخلّي الشغل معايا آمن ومكتوب ومنظّم",
+      sysPledges: [
+        { t: "مكتوب + سعر", d: "قبل ما نبدأ، بتاخد نطاق الشغل والسعر والمواعيد مكتوبة" },
+        { t: "خطة مراحل", d: "الشغل متقسم بمواعيد واضحة — بتبص تتفرج على التقدم، مش مفاجآت" },
+        { t: "جولتي تعديل", d: "مدخلين في كل باقة. الوضوح محسوب في السعر" },
+        { t: "ليستة الإطلاق", d: "صور المتاجر، ملاحظات الإصدار، الليستة — كل حاجة طالعة نظيفة" },
+        { t: "فترة دعم", d: "فترة بعد الإطلاق نصلّح فيها أي حاجة تظهر" }
+      ],
       metaDesc: "شهاب مدحت (shijz) — مطوّر فلاتر فول ستاك وصانع محتوى. ببني تطبيقات موبايل من الأول لآخر وبعمل استراتيجيات محتوى بتنمّي براندز. Flutter, Dart, TypeScript, MongoDB.",
-      about: "ببني تطبيقات Flutter من 2023 — بعمل المنتج كامل من الأول لآخر (الواجهة، الـ APIs، MongoDB، والنشر)، وبجانب ده أنا صانع محتوى بوثّق كل مشروع. فلو جبّتلي فكرة، مش هعملها تطبيق بس — هساعدها تتشاف كمان.",
+      about: "بصنع محتوى من 2022 وبنبني بـ Flutter من 2023 — بعمل المنتج كامل من الأول لآخر (الواجهة، الـ APIs، MongoDB، والنشر)، وبوثّق كل مشروع. فلو جبّتلي فكرة، مش هعملها تطبيق بس — هساعدها تتشاف كمان.",
       projectsCmd: "ls projects/",
       metricsCmd: "cat metrics.txt",
       numbers: [
@@ -1417,6 +1680,8 @@
         { platform: "Instagram", title: "استراتيجية محتوى ٣٠ يوم في ريلز واحد" }
       ],
       mtBtn: "احجز مكالمة ١٥ دقيقة →",
+      mtBtnApp: "احجز مكالمة عن تطبيقك ←",
+      mtBtnContent: "احجز مكالمة عن محتواك ←",
       sayCta: "$ ./say_hi.sh →",
       followersLabel: "متابع على كل المنصات",
       hiNameL: "اسمك",
@@ -1550,6 +1815,33 @@
     ).join("");
   }
 
+  function renderSystem(){
+    document.getElementById("systemRow").innerHTML = t.sysPledges.map(p =>
+      "<div class=\"pledge\"><b>" + p.t + "</b><i>" + p.d + "</i></div>"
+    ).join("");
+  }
+
+  let persona = "both";
+  function applyPersona(){
+    document.querySelectorAll("#servicesRow .service").forEach(c => {
+      const isApp = !!c.querySelector('[data-form="app"]');
+      c.classList.toggle("primary", (isApp && persona === "app") || (!isApp && persona === "content"));
+      c.style.order = (isApp && persona === "app") ? "-1" : (!isApp && persona === "content") ? "-1" : "";
+    });
+    const btn = document.getElementById("meetingBtn");
+    if(btn) btn.textContent = (persona === "app") ? t.mtBtnApp : (persona === "content") ? t.mtBtnContent : t.mtBtn;
+    document.querySelectorAll(".path-opt, .float-btn").forEach(b => {
+      b.classList.toggle("is-on", b.dataset.path === persona || (persona === "both" && b.dataset.path === "both"));
+    });
+  }
+  function setPersona(p){
+    persona = (p === "app" || p === "content") ? p : "both";
+    applyPersona();
+  }
+  document.querySelectorAll(".path-opt, .float-btn").forEach(b => {
+    b.addEventListener("click", () => setPersona(b.dataset.path));
+  });
+
   function applyLang(l){
     lang = (l === "ar") ? "ar" : "en";
     t = I18N[lang];
@@ -1563,6 +1855,8 @@
     renderProjects();
     renderProcess();
     renderServices();
+    renderSystem();
+    applyPersona();
     renderCreator();
     buildTimes();
   }
@@ -1797,6 +2091,20 @@
   document.getElementById("mtMail").addEventListener("click", () => {
     location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(t.subjectMeeting + (mtName.value.trim() || t.someone)) + "&body=" + encodeURIComponent(meetingText());
     closeAny(mtModal);
+  });
+
+  // ----- reveal on scroll -----
+  const revealIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add("is-in"); revealIO.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".reveal").forEach(el => {
+    if(el.id === "pathChoose" && window.matchMedia("(max-width: 720px)").matches){
+      el.classList.add("is-in");
+    } else {
+      revealIO.observe(el);
+    }
   });
 
   // ----- init -----
