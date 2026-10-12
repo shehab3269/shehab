@@ -1085,6 +1085,79 @@
     color: var(--text-muted);
     line-height: 1.5;
   }
+  .term-shell{
+    margin: 6px 0 10px 22px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    transition: border-color .2s;
+  }
+  .term-tag{ color: var(--text-muted); font-size: 12px; }
+  .term-shell:focus-within{ border-color: var(--accent-soft); }
+  .term-log{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-height: 280px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .term-log .tline{
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .term-log .tline.term-you{ color: var(--text); }
+  .term-log .tline .tprompt{ color: var(--accent-soft); margin-right: 6px; }
+  .term-log .tline.ok{ color: var(--accent); }
+  .term-log .tline.err{ color: #e08a8a; }
+  .term-inputrow{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .term-inputrow .prompt{ color: var(--accent); flex-shrink: 0; }
+  .term-inputrow input{
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    caret-color: var(--accent);
+  }
+  html[lang="ar"] .term-inputrow input{ font-family: 'JetBrains Mono', monospace; }
+  .term-examples{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .term-chip{
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+  .term-chip:hover{ color: var(--accent); border-color: var(--accent); }
+  html[dir="rtl"] .term-shell{ margin-left: 0; margin-right: 22px; }
+  html[dir="rtl"] .term-log .tline .tprompt{ margin-right: 0; margin-left: 6px; }
+  html[dir="rtl"] .term-inputrow{ flex-direction: row-reverse; }
+  html[dir="rtl"] .term-log .tline, html[dir="rtl"] .term-chip{ unicode-bidi: plaintext; text-align: right; }
   html[dir="rtl"] .content{ text-align: right; }
   html[dir="rtl"] .line, html[dir="rtl"] .prompt, html[dir="rtl"] .cmd{ unicode-bidi: plaintext; }
   html[dir="rtl"] .out, html[dir="rtl"] .brand, html[dir="rtl"] .role,
@@ -1114,12 +1187,13 @@
     .content{ padding: 26px 20px 30px; }
     h1{ font-size: 21px; }
     .brand, .out, .role, .tags, .links, .footer, .projects, .cta-row, .services,
-    .process, .numbers, .content-grid, .meeting-row, .path-choose, .system, .sys-intro{ margin-left: 0; }
+    .process, .numbers, .content-grid, .meeting-row, .path-choose, .system, .sys-intro, .term-shell{ margin-left: 0; }
     html[dir="rtl"] .brand, html[dir="rtl"] .out, html[dir="rtl"] .role, html[dir="rtl"] .tags,
     html[dir="rtl"] .links, html[dir="rtl"] .footer, html[dir="rtl"] .projects,
     html[dir="rtl"] .cta-row, html[dir="rtl"] .services, html[dir="rtl"] .process,
     html[dir="rtl"] .numbers, html[dir="rtl"] .content-grid, html[dir="rtl"] .meeting-row,
-    html[dir="rtl"] .path-choose, html[dir="rtl"] .system, html[dir="rtl"] .sys-intro{
+    html[dir="rtl"] .path-choose, html[dir="rtl"] .system, html[dir="rtl"] .sys-intro,
+    html[dir="rtl"] .term-shell{
       margin-right: 0;
     }
     .service-cta{ width: 100%; justify-content: center; }
@@ -1291,6 +1365,16 @@
     <div class="followers reveal">
       <span class="followers-count" id="followersCount">0</span>
       <span class="followers-label" data-i18n="followersLabel">followers across all platforms</span>
+    </div>
+
+    <div class="line" style="margin-top:26px;"><span class="prompt">$</span><span class="cmd">./shell.sh</span> <span class="term-tag" data-i18n="shellHint">— type a command, hit enter</span></div>
+    <div class="term-shell reveal" id="termShell">
+      <div class="term-log" id="termLog" aria-live="polite" aria-label="Terminal output"></div>
+      <div class="term-inputrow">
+        <span class="prompt">sm@shehab:~$</span>
+        <input type="text" id="termInput" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-placeholder="termPlaceholder" aria-label="Terminal command">
+      </div>
+      <div class="term-examples" id="termExamples"></div>
     </div>
 
     <div class="footer">sm@shehab-medhat.site:~$ <span style="opacity:.6">_</span></div>
@@ -1597,7 +1681,36 @@
       subjectHi: "[Portfolio] Message from ",
       subjectApp: "[Portfolio] App idea from ",
       subjectContent: "[Portfolio] Content strategy from ",
-      subjectMeeting: "[Portfolio] Meeting request from "
+      subjectMeeting: "[Portfolio] Meeting request from ",
+      shellHint: "— type a command, hit enter",
+      termPlaceholder: "type help…",
+      termWelcome: "interactive shell ready — type 'help' to see what works.",
+      termUnknown: "command not found",
+      termTryHelp: "type 'help' for the list.",
+      termHelpTitle: "available commands",
+      termOpenedForm: "opening…",
+      termWhoami: "shehab medhat (shijz) — flutter fullstack dev & content creator",
+      termFileMissing: "cat: no such file",
+      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   services.txt   system.txt",
+      termSudo: "nice try — this shell is read-only.",
+      termDuck: "quack. (a duck waddled across the screen)",
+      termLangUsage: "usage: lang ar | lang en",
+      termHelp: [
+        ["help", "this list"],
+        ["about", "quick intro"],
+        ["projects", "things i've built"],
+        ["services", "packages & prices"],
+        ["process", "how i work"],
+        ["system", "how we keep it clean"],
+        ["creator", "content i make"],
+        ["contact", "how to reach me"],
+        ["book", "book a 15-min call"],
+        ["lang", "lang ar | lang en"],
+        ["whoami", "who is this"],
+        ["ls", "list files"],
+        ["cat", "cat about.txt"],
+        ["clear", "clear the screen"]
+      ]
     },
     ar: {
       title: "شهاب مدحت — مطوّر فلاتر وصانع محتوى",
@@ -1737,7 +1850,36 @@
       subjectHi: "[Portfolio] رسالة من ",
       subjectApp: "[Portfolio] فكرة تطبيق من ",
       subjectContent: "[Portfolio] استراتيجية محتوى من ",
-      subjectMeeting: "[Portfolio] طلب مكالمة من "
+      subjectMeeting: "[Portfolio] طلب مكالمة من ",
+      shellHint: "— اكتب أمر واضغط Enter",
+      termPlaceholder: "اكتب help…",
+      termWelcome: "الطرفية التفاعلية جاهزة — اكتب 'help' تشوف المتاح.",
+      termUnknown: "الأمر غير معروف",
+      termTryHelp: "اكتب 'help' تشوف القائمة.",
+      termHelpTitle: "الأوامر المتاحة",
+      termOpenedForm: "بيتم الفتح…",
+      termWhoami: "شهاب مدحت (shijz) — مطوّر فلاتر فول ستاك وصانع محتوى",
+      termFileMissing: "cat: مفيش ملف بالاسم ده",
+      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   services.txt   system.txt",
+      termSudo: "محاولة حلوة — الطرفية دي للقراءة بس.",
+      termDuck: "كويك. (بطة عدّت على الشاشة)",
+      termLangUsage: "الاستخدام: lang ar | lang en",
+      termHelp: [
+        ["help", "القائمة دي"],
+        ["about", "نبذة سريعة"],
+        ["projects", "اللي بنيته"],
+        ["services", "الباقات والأسعار"],
+        ["process", "طريقة شغلي"],
+        ["system", "إزاي بنظبط الشغل"],
+        ["creator", "المحتوى اللي بعمله"],
+        ["contact", "إزاي توصلني"],
+        ["book", "احجز مكالمة ١٥ دقيقة"],
+        ["lang", "lang ar | lang en"],
+        ["whoami", "مين ده"],
+        ["ls", "اسرد الملفات"],
+        ["cat", "cat about.txt"],
+        ["clear", "امسح الشاشة"]
+      ]
     }
   };
 
@@ -1859,6 +2001,7 @@
     applyPersona();
     renderCreator();
     buildTimes();
+    if(typeof termLocalize === "function") termLocalize();
   }
 
   document.querySelectorAll(".lang-btn").forEach(b => {
@@ -2107,10 +2250,136 @@
     }
   });
 
+  // ----- interactive shell -----
+  const termShell = document.getElementById("termShell");
+  const termLog = document.getElementById("termLog");
+  const termInput = document.getElementById("termInput");
+  const termExamples = document.getElementById("termExamples");
+  const termHistory = [];
+  let termHIndex = 0;
+
+  function termPrint(text, cls){
+    if(!termLog) return;
+    const d = document.createElement("div");
+    d.className = "tline" + (cls ? " " + cls : "");
+    d.textContent = text;
+    termLog.appendChild(d);
+    termLog.scrollTop = termLog.scrollHeight;
+  }
+  function termEcho(cmd){
+    if(!termLog) return;
+    const d = document.createElement("div");
+    d.className = "tline term-you";
+    const p = document.createElement("span");
+    p.className = "tprompt";
+    p.textContent = "sm@shehab:~$";
+    d.appendChild(p);
+    d.appendChild(document.createTextNode(cmd));
+    termLog.appendChild(d);
+    termLog.scrollTop = termLog.scrollHeight;
+  }
+  function termPrintPkgs(list, title){
+    termPrint(title, "ok");
+    list.slice(0, 3).forEach(x => termPrint("  • " + x.v + (x.p ? "  —  " + x.p : "")));
+  }
+  const termFiles = {
+    "about.txt": () => termPrint(t.about),
+    "process.txt": () => t.process.forEach(s => { termPrint(s.num + " · " + s.title, "ok"); termPrint("  " + s.desc); }),
+    "services.txt": () => { termPrintPkgs(t.pkgApp, t.serviceAppName); termPrintPkgs(t.pkgContent, t.serviceContentName); },
+    "system.txt": () => t.sysPledges.forEach(p => { termPrint("• " + p.t, "ok"); termPrint("  " + p.d); }),
+    "creator.txt": () => t.creator.forEach(c => termPrint("• " + c.platform + " — " + c.title)),
+    "contact.txt": () => { termPrint(CONTACT.email, "ok"); termPrint("whatsapp: +" + CONTACT.whatsapp); }
+  };
+  function termHelpLines(){
+    termPrint(t.termHelpTitle, "ok");
+    t.termHelp.forEach(pair => termPrint("  " + (pair[0] + "          ").slice(0, 11) + pair[1]));
+  }
+  const termCommands = {
+    help: termHelpLines,
+    about: () => termPrint(t.about),
+    projects: () => t.projects.forEach(p => { termPrint(p.name + " — " + p.tag, "ok"); termPrint("  " + p.desc); termPrint("  [" + p.tech.join(", ") + "]"); }),
+    project: () => termCommands.projects(),
+    services: termFiles["services.txt"],
+    pricing: termFiles["services.txt"],
+    process: termFiles["process.txt"],
+    system: termFiles["system.txt"],
+    creator: termFiles["creator.txt"],
+    contact: termFiles["contact.txt"],
+    book: () => { termPrint(t.termOpenedForm); openModal(mtModal); },
+    call: () => termCommands.book(),
+    hi: () => { termPrint(t.termOpenedForm); openModal(modal); },
+    say_hi: () => termCommands.hi(),
+    whoami: () => termPrint(t.termWhoami),
+    ls: () => termPrint(t.termFiles),
+    clear: () => { if(termLog) termLog.innerHTML = ""; },
+    sudo: () => termPrint(t.termSudo, "err"),
+    duck: () => termPrint(t.termDuck),
+    lang: arg => {
+      if(arg === "ar" || arg === "en"){ applyLang(arg); termPrint("lang → " + arg, "ok"); }
+      else termPrint(t.termLangUsage, "err");
+    },
+    cat: arg => {
+      const f = (arg || "").trim().replace(/\/+$/, "");
+      const key = f.endsWith(".txt") ? f : f + ".txt";
+      if(termFiles[key]) termFiles[key]();
+      else if(f === "projects") termCommands.projects();
+      else termPrint(t.termFileMissing + ": " + (arg || ""), "err");
+    }
+  };
+  function termRun(raw){
+    const line = raw.trim();
+    termEcho(raw);
+    if(!line) return;
+    termHistory.push(line);
+    termHIndex = termHistory.length;
+    const sp = line.indexOf(" ");
+    const cmd = (sp === -1 ? line : line.slice(0, sp)).toLowerCase();
+    const arg = sp === -1 ? "" : line.slice(sp + 1).trim();
+    const fn = termCommands[cmd];
+    if(fn) fn(arg);
+    else termPrint(t.termUnknown + ": " + cmd + ". " + t.termTryHelp, "err");
+  }
+  function termRenderExamples(){
+    if(!termExamples) return;
+    const alt = (lang === "ar") ? "en" : "ar";
+    const items = ["help", "projects", "services", "book", "contact", "lang " + alt];
+    termExamples.innerHTML = "";
+    items.forEach(x => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "term-chip";
+      b.textContent = x;
+      b.addEventListener("click", () => { termRun(x); if(termInput) termInput.focus(); });
+      termExamples.appendChild(b);
+    });
+  }
+  function termLocalize(){
+    if(termInput) termInput.placeholder = t.termPlaceholder;
+    termRenderExamples();
+  }
+  if(termInput){
+    termInput.addEventListener("keydown", e => {
+      if(e.key === "Enter"){ const v = termInput.value; termInput.value = ""; termRun(v); }
+      else if(e.key === "ArrowUp"){
+        if(termHistory.length){ termHIndex = Math.max(0, termHIndex - 1); termInput.value = termHistory[termHIndex]; e.preventDefault(); }
+      } else if(e.key === "ArrowDown"){
+        termHIndex = Math.min(termHistory.length, termHIndex + 1);
+        termInput.value = termHistory[termHIndex] || "";
+        e.preventDefault();
+      }
+    });
+    if(termShell){
+      termShell.addEventListener("click", e => {
+        if(e.target === termShell || e.target === termLog) termInput.focus();
+      });
+    }
+  }
+
   // ----- init -----
   let saved = "en";
   try{ saved = localStorage.getItem("shehab_lang") || "en"; }catch(e){}
   applyLang(saved);
+  termPrint(t.termWelcome);
 </script>
 
 </body>
