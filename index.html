@@ -117,7 +117,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 4vw;
+    padding: 76px 4vw 40px;
     line-height: 1.65;
   }
   .terminal{
@@ -695,8 +695,20 @@
     border-radius: 6px;
     padding: 10px 16px;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     transition: transform .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
   }
+  .cta--primary{
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1a1406;
+    font-weight: 600;
+  }
+  .cta--primary:hover{ color: #1a1406; box-shadow: 0 12px 26px -12px rgba(232,163,61,.75); }
   .cta:hover{
     color: var(--accent);
     border-color: var(--accent);
@@ -1091,24 +1103,43 @@
     --sp-lg: 24px;
     --sp-xl: 34px;
   }
-  .quicknav{
+  .topnav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
-    margin: 0 0 18px 0;
+    justify-content: center;
+    padding: 9px 14px;
+    background: rgba(13,23,18,.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
   }
-  .quicknav a{
+  .topnav a{
     font-family: 'JetBrains Mono', monospace;
     font-size: 11.5px;
     color: var(--text-muted);
     text-decoration: none;
-    border: 1px solid var(--border);
+    border: 1px solid transparent;
     border-radius: 20px;
     padding: 3px 11px;
     transition: color .15s, border-color .15s, background .15s;
   }
-  .quicknav a:hover{ color: var(--accent); border-color: var(--accent); background: rgba(232,163,61,.06); }
-  [id^="s-"], #termShell{ scroll-margin-top: 24px; }
+  .topnav a:hover{ color: var(--accent); border-color: var(--accent); background: rgba(232,163,61,.06); }
+  [id^="s-"], #termShell{ scroll-margin-top: 66px; }
+  .hero-cta{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 16px 0 6px 22px;
+  }
+  .hero-cta .avail{ margin: 0; }
+  .is-hidden{ display: none !important; }
   .avail{
     display: inline-flex;
     align-items: center;
@@ -1395,6 +1426,15 @@
   </svg>
 </div>
 
+<nav class="topnav" id="topnav" aria-label="Sections">
+  <a href="#s-about" data-i18n="navAbout">about</a>
+  <a href="#s-projects" data-i18n="navProjects">projects</a>
+  <a href="#s-services" data-i18n="navServices">services</a>
+  <a href="#s-why" data-i18n="navWhy">why me</a>
+  <a href="#s-contact" data-i18n="navContact">contact</a>
+  <a href="#termShell" data-i18n="navTerminal">terminal</a>
+</nav>
+
 <main class="terminal">
   <div class="titlebar">
     <span class="titlebar-left">
@@ -1417,16 +1457,6 @@
   </div>
 
   <div class="content">
-    <nav class="quicknav" id="quicknav" aria-label="Sections">
-      <a href="#s-about" data-i18n="navAbout">about</a>
-      <a href="#s-projects" data-i18n="navProjects">projects</a>
-      <a href="#s-services" data-i18n="navServices">services</a>
-      <a href="#s-why" data-i18n="navWhy">why me</a>
-      <a href="#s-reviews" data-i18n="navReviews">reviews</a>
-      <a href="#s-contact" data-i18n="navContact">contact</a>
-      <a href="#termShell" data-i18n="navTerminal">terminal</a>
-    </nav>
-
     <p class="comment" data-i18n="comment"># welcome — look around, pick a language, say hi</p>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">whoami</span></div>
@@ -1435,6 +1465,12 @@
       <h1>Shehab Medhat <span class="alias">(shijz)</span><span class="cursor"></span></h1>
     </div>
     <p class="role" data-i18n="role">fullstack mobile developer & content creator · I ship apps, then help them get seen</p>
+
+    <div class="hero-cta reveal">
+      <a class="cta cta--primary" href="#s-projects" data-i18n="heroWork">see my work</a>
+      <button type="button" class="cta" id="heroCallBtn" data-i18n="heroCall">book a call</button>
+      <span class="avail"><span class="avail-dot"></span><span data-i18n="avail">available for new projects</span></span>
+    </div>
 
     <div class="path-choose reveal" id="pathChoose">
       <span class="path-q" data-i18n="pathQ">what are you here for?</span>
@@ -1451,11 +1487,6 @@
         </button>
       </div>
       <span class="path-note" data-i18n="pathBoth">skip it? you'll see both — order follows your pick.</span>
-    </div>
-
-    <div class="avail reveal">
-      <span class="avail-dot"></span>
-      <span data-i18n="avail">available for new projects</span>
     </div>
 
     <div class="line"><span class="prompt">$</span><span class="cmd">cat stack.txt</span></div>
@@ -1511,13 +1542,6 @@
       <thead><tr><th data-i18n="whyThem">typical</th><th data-i18n="whyMe">with me</th></tr></thead>
       <tbody id="whyBody"></tbody>
     </table>
-
-    <div class="sep" id="s-creator"></div>
-    <div class="content-grid reveal" id="creatorRow"></div>
-
-    <div class="line" id="s-reviews"><span class="prompt">$</span><span class="cmd">cat reviews.txt</span></div>
-    <h2 class="sr-only" data-i18n="srReviews">Reviews</h2>
-    <div class="reviews reveal" id="reviewsRow"></div>
 
     <div class="line" style="margin-top:24px;"><span class="prompt">$</span><span class="cmd">book_a_call.sh</span></div>
     <div class="meeting-row reveal">
@@ -1737,7 +1761,6 @@
       srProjects: "Projects",
       srProcess: "How I work",
       srServices: "Services and packages",
-      srCreator: "As a creator",
       srContact: "Contact",
       srFollowers: "Followers",
       pathQ: "what are you here for?",
@@ -1760,11 +1783,12 @@
         { t: "support window", d: "A window after launch to squash anything that comes up." }
       ],
       avail: "available for new projects",
+      heroWork: "see my work",
+      heroCall: "book a call",
       navAbout: "about",
       navProjects: "projects",
       navServices: "services",
       navWhy: "why me",
-      navReviews: "reviews",
       navContact: "contact",
       navTerminal: "terminal",
       srWhy: "Why work with me",
@@ -1776,12 +1800,6 @@
         { them: "you have to chase for updates", me: "clear milestones — you always know where it stands" },
         { them: "launch day arrives in silence", me: "content built around launch, so day one lands" },
         { them: "support stops the moment you pay up", me: "a support window after launch to fix what shows up" }
-      ],
-      srReviews: "Reviews",
-      reviews: [
-        { stars: "★★★★★", text: "Placeholder — replace with a real quote about the app build and how the process felt.", name: "Client name", role: "founder, startup" },
-        { stars: "★★★★★", text: "Placeholder — replace with a real quote about the content strategy and the results.", name: "Client name", role: "brand owner" },
-        { stars: "★★★★★", text: "Placeholder — replace with a real quote about working together end to end.", name: "Client name", role: "creator" }
       ],
       metaDesc: "Shehab Medhat (shijz) — Flutter fullstack mobile developer & content creator. Builds mobile apps end to end and creates content strategies that grow brands. Flutter, Dart, TypeScript, MongoDB.",
       about: "I've been creating content since 2022 and building with Flutter since 2023 — I build complete mobile products end to end (UI, backend APIs, MongoDB, stores) and I document every build. So when you bring me an idea, I don't just ship the app. I help it get seen.",
@@ -1822,12 +1840,6 @@
         { v: "strategy + content", p: "from $200/mo", blurb: "plan + hooks, scripts and ready-to-post content" },
         { v: "ongoing brand", p: "from $350/mo", blurb: "a monthly content engine that grows your brand" },
         { v: "not sure — help me pick", p: "", blurb: "we'll figure it out together on a quick call" }
-      ],
-      creatorIntro: "I'm also the creator behind every build — 99+ videos since 2022, documenting the process and shipping the story with the product.",
-      creator: [
-        { platform: "YouTube", title: "I build an app from zero — the whole process on camera" },
-        { platform: "TikTok", title: "why I document every build (and you should too)" },
-        { platform: "Instagram", title: "a 30-day content strategy in one reel" }
       ],
       mtBtn: "book a 15-min intro call →",
       mtBtnApp: "book a call about your app →",
@@ -1897,7 +1909,7 @@
       termOpenedForm: "opening…",
       termWhoami: "shehab medhat (shijz) — flutter fullstack dev & content creator",
       termFileMissing: "cat: no such file",
-      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   reviews.txt   services.txt   system.txt   why_me.txt",
+      termFiles: "about.txt   contact.txt   process.txt   projects/   services.txt   system.txt   why_me.txt",
       termSudo: "nice try — this shell is read-only.",
       termDuck: "quack. (a duck waddled across the screen)",
       termLangUsage: "usage: lang ar | lang en",
@@ -1909,8 +1921,6 @@
         ["process", "how i work"],
         ["system", "how we keep it clean"],
         ["why", "why work with me"],
-        ["reviews", "what people say"],
-        ["creator", "content i make"],
         ["contact", "how to reach me"],
         ["book", "book a 15-min call"],
         ["lang", "lang ar | lang en"],
@@ -1932,7 +1942,6 @@
       srProjects: "المشاريع",
       srProcess: "طريقة شغلي",
       srServices: "الخدمات والباقات",
-      srCreator: "كصانع محتوى",
       srContact: "تواصل",
       srFollowers: "المتابعين",
       pathQ: "زهقت إيه بالتحديد؟",
@@ -1955,11 +1964,12 @@
         { t: "فترة دعم", d: "فترة بعد الإطلاق نصلّح فيها أي حاجة تظهر" }
       ],
       avail: "متاح لمشاريع جديدة",
+      heroWork: "شوف شغلي",
+      heroCall: "احجز مكالمة",
       navAbout: "عني",
       navProjects: "المشاريع",
       navServices: "الخدمات",
       navWhy: "ليه أنا",
-      navReviews: "آراء",
       navContact: "تواصل",
       navTerminal: "التيرمنال",
       srWhy: "ليه تشتغل معايا",
@@ -1971,12 +1981,6 @@
         { them: "بتجري وراهم على أي تحديث", me: "مراحل واضحة — دايمًا عارف انت واقف فين" },
         { them: "يوم الإطلاق بيعدّي في السكوت", me: "المحتوى متبني حوالين الإطلاق، فأول يوم بيفرق" },
         { them: "الدعم بيقف أول ما تدفع", me: "فترة دعم بعد الإطلاق نصلّح فيها أي حاجة تظهر" }
-      ],
-      srReviews: "الآراء",
-      reviews: [
-        { stars: "★★★★★", text: "مبدئي — استبدله برأي عميل حقيقي عن بناء التطبيق وتجربة الشغل.", name: "اسم العميل", role: "مؤسس شركة" },
-        { stars: "★★★★★", text: "مبدئي — استبدله برأي عميل حقيقي عن استراتيجية المحتوى والنتايج.", name: "اسم العميل", role: "صاحب براند" },
-        { stars: "★★★★★", text: "مبدئي — استبدله برأي عميل حقيقي عن الشغل من الأول لآخر.", name: "اسم العميل", role: "كريتور" }
       ],
       metaDesc: "شهاب مدحت (shijz) — مطوّر فلاتر فول ستاك وصانع محتوى. ببني تطبيقات موبايل من الأول لآخر وبعمل استراتيجيات محتوى بتنمّي براندز. Flutter, Dart, TypeScript, MongoDB.",
       about: "بصنع محتوى من 2022 وبنبني بـ Flutter من 2023 — بعمل المنتج كامل من الأول لآخر (الواجهة، الـ APIs، MongoDB، والنشر)، وبوثّق كل مشروع. فلو جبّتلي فكرة، مش هعملها تطبيق بس — هساعدها تتشاف كمان.",
@@ -2017,12 +2021,6 @@
         { v: "استراتيجية + محتوى", p: "من $200/شهر", blurb: "خطة + hooks وسكريبتات ومحتوى جاهز للنشر" },
         { v: "براند مستمر", p: "من $350/شهر", blurb: "ماكينة محتوى شهرية بتنمّي براندك" },
         { v: "مش متأكد — ساعدني اختار", p: "", blurb: "هنحددها مبدئياً سوا في مكالمة سريعة" }
-      ],
-      creatorIntro: "أنا كمان الكريتور اللي ورا كل منتج — أكتر من ٩٩ فيديو من ٢٠٢٢، بوثّق العملية وأنزّل القصة مع المنتج.",
-      creator: [
-        { platform: "YouTube", title: "ببني تطبيق من الصفر — العملية كلها قدام الكاميرا" },
-        { platform: "TikTok", title: "ليه بوثّق كل بيتا (وأنت كمان لازم)" },
-        { platform: "Instagram", title: "استراتيجية محتوى ٣٠ يوم في ريلز واحد" }
       ],
       mtBtn: "احجز مكالمة ١٥ دقيقة →",
       mtBtnApp: "احجز مكالمة عن تطبيقك ←",
@@ -2092,7 +2090,7 @@
       termOpenedForm: "بيتم الفتح…",
       termWhoami: "شهاب مدحت (shijz) — مطوّر فلاتر فول ستاك وصانع محتوى",
       termFileMissing: "cat: مفيش ملف بالاسم ده",
-      termFiles: "about.txt   contact.txt   creator.txt   process.txt   projects/   reviews.txt   services.txt   system.txt   why_me.txt",
+      termFiles: "about.txt   contact.txt   process.txt   projects/   services.txt   system.txt   why_me.txt",
       termSudo: "محاولة حلوة — الطرفية دي للقراءة بس.",
       termDuck: "كويك. (بطة عدّت على الشاشة)",
       termLangUsage: "الاستخدام: lang ar | lang en",
@@ -2104,8 +2102,6 @@
         ["process", "طريقة شغلي"],
         ["system", "إزاي بنظبط الشغل"],
         ["why", "ليه تشتغل معايا"],
-        ["reviews", "الناس بتقول إيه"],
-        ["creator", "المحتوى اللي بعمله"],
         ["contact", "إزاي توصلني"],
         ["book", "احجز مكالمة ١٥ دقيقة"],
         ["lang", "lang ar | lang en"],
@@ -2177,20 +2173,6 @@
     });
   }
 
-  function renderCreator(){
-    const icons = {
-      YouTube: '<svg viewBox="0 0 24 24" fill="#e8a33d" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>',
-      TikTok: '<svg viewBox="0 0 24 24" fill="#45D1FD" aria-hidden="true"><path d="M19.6 7.1a5 5 0 0 1-3.5-1.5 5 5 0 0 1-1.4-3.3h-3.3v13.3a2.7 2.7 0 1 1-2.7-2.7c.3 0 .6 0 .9.1V9.6a6 6 0 1 0 5.2 5.9V9.9a8 8 0 0 0 4.8 1.6V7.1z"/></svg>',
-      Instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="#e8a33d" stroke="none"/></svg>'
-    };
-    document.getElementById("creatorRow").innerHTML = t.creator.map(c =>
-      "<a class=\"pf-card\" href=\"https://www.instagram.com/shehab_medhatt\" target=\"_blank\" rel=\"noopener\">" +
-        "<span class=\"pf-badge\">" + (icons[c.platform] || "") + c.platform + "</span>" +
-        "<span class=\"pf-title\">" + c.title + "</span>" +
-      "</a>"
-    ).join("");
-  }
-
   function renderSystem(){
     document.getElementById("systemRow").innerHTML = t.sysPledges.map(p =>
       "<div class=\"pledge\"><b>" + p.t + "</b><i>" + p.d + "</i></div>"
@@ -2200,19 +2182,6 @@
   function renderWhy(){
     document.getElementById("whyBody").innerHTML = t.why.map(r =>
       "<tr><td>" + r.them + "</td><td>" + r.me + "</td></tr>"
-    ).join("");
-  }
-
-  function renderReviews(){
-    document.getElementById("reviewsRow").innerHTML = t.reviews.map(r =>
-      "<div class=\"review\">" +
-        "<div class=\"review-stars\">" + r.stars + "</div>" +
-        "<p class=\"review-text\">" + r.text + "</p>" +
-        "<div class=\"review-meta\">" +
-          "<span class=\"review-avatar\">" + r.name.charAt(0) + "</span>" +
-          "<span class=\"review-who\"><b>" + r.name + "</b><span>" + r.role + "</span></span>" +
-        "</div>" +
-      "</div>"
     ).join("");
   }
 
@@ -2252,9 +2221,7 @@
     renderServices();
     renderSystem();
     renderWhy();
-    renderReviews();
     applyPersona();
-    renderCreator();
     buildTimes();
     if(typeof termLocalize === "function") termLocalize();
   }
@@ -2474,6 +2441,16 @@
     buildTimes();
     openModal(mtModal);
   });
+  const heroCallBtn = document.getElementById("heroCallBtn");
+  if(heroCallBtn){
+    heroCallBtn.addEventListener("click", () => {
+      mtName.value = "";
+      mtDate.value = mtDate.min;
+      pickedTime = "12:00";
+      buildTimes();
+      openModal(mtModal);
+    });
+  }
   function meetingText(){
     const name = mtName.value.trim() || t.anonymous;
     return t.mtPrefix +
@@ -2542,9 +2519,7 @@
     "process.txt": () => t.process.forEach(s => { termPrint(s.num + " · " + s.title, "ok"); termPrint("  " + s.desc); }),
     "services.txt": () => { termPrintPkgs(t.pkgApp, t.serviceAppName); termPrintPkgs(t.pkgContent, t.serviceContentName); },
     "system.txt": () => t.sysPledges.forEach(p => { termPrint("• " + p.t, "ok"); termPrint("  " + p.d); }),
-    "creator.txt": () => t.creator.forEach(c => termPrint("• " + c.platform + " — " + c.title)),
     "why_me.txt": () => t.why.forEach(r => termPrint("• " + r.me, "ok")),
-    "reviews.txt": () => t.reviews.forEach(r => { termPrint("★ " + r.text); termPrint("  — " + r.name + ", " + r.role); }),
     "contact.txt": () => { termPrint(CONTACT.email, "ok"); termPrint("whatsapp: +" + CONTACT.whatsapp); }
   };
   function termHelpLines(){
@@ -2561,8 +2536,6 @@
     process: termFiles["process.txt"],
     system: termFiles["system.txt"],
     why: termFiles["why_me.txt"],
-    reviews: termFiles["reviews.txt"],
-    creator: termFiles["creator.txt"],
     contact: termFiles["contact.txt"],
     book: () => { termPrint(t.termOpenedForm); openModal(mtModal); },
     call: () => termCommands.book(),
@@ -2602,7 +2575,7 @@
   function termRenderExamples(){
     if(!termExamples) return;
     const alt = (lang === "ar") ? "en" : "ar";
-    const items = ["help", "projects", "services", "why", "reviews", "book", "contact", "lang " + alt];
+    const items = ["help", "projects", "services", "why", "book", "contact", "lang " + alt];
     termExamples.innerHTML = "";
     items.forEach(x => {
       const b = document.createElement("button");
