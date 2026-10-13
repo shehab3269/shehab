@@ -1277,8 +1277,77 @@
   html[dir="rtl"] .why th, html[dir="rtl"] .why td{ text-align: right; }
   html[dir="rtl"] .why th:last-child, html[dir="rtl"] .why td:last-child{ border-left: 0; border-right: 1px solid var(--border); }
   html[dir="rtl"] .wa-float{ right: auto; left: 18px; }
+  .bless{
+    position: fixed;
+    right: 0;
+    top: 46%;
+    transform: translateY(-50%);
+    z-index: 14;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 13px 11px 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 24px 0 0 24px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: -8px 0 24px -16px rgba(0,0,0,.8);
+    animation: blessIn .8s cubic-bezier(.16,1,.3,1) .7s both, blessPeek 3s ease-in-out 1.8s 2;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .bless svg{ width: 20px; height: 20px; flex-shrink: 0; color: var(--accent); }
+  .bless-text{
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width .32s cubic-bezier(.16,1,.3,1), opacity .2s;
+  }
+  .bless:hover, .bless.is-open{ background: var(--surface-2); border-color: var(--accent); color: var(--accent); }
+  .bless:hover .bless-text, .bless:focus-visible .bless-text, .bless.is-open .bless-text{ max-width: 240px; opacity: 1; }
+  @keyframes blessIn{ from{ transform: translate(100%, -50%); opacity: 0; } to{ transform: translate(0, -50%); opacity: 1; } }
+  @keyframes blessPeek{ 0%,100%{ transform: translateY(-50%) translateX(0); } 45%{ transform: translateY(-50%) translateX(-9px); } }
+  @keyframes blessInR{ from{ transform: translate(-100%, -50%); opacity: 0; } to{ transform: translate(0, -50%); opacity: 1; } }
+  @keyframes blessPeekR{ 0%,100%{ transform: translateY(-50%) translateX(0); } 45%{ transform: translateY(-50%) translateX(9px); } }
+  html[dir="rtl"] .bless{
+    right: auto;
+    left: 0;
+    border-radius: 0 24px 24px 0;
+    border-right: 1px solid var(--border);
+    border-left: none;
+    padding: 11px 15px 11px 13px;
+    box-shadow: 8px 0 24px -16px rgba(0,0,0,.8);
+    animation-name: blessInR, blessPeekR;
+  }
+  .toast{
+    position: fixed;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%) translateY(12px);
+    z-index: 50;
+    max-width: min(88vw, 440px);
+    background: var(--surface-2);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0 14px 30px -14px rgba(0,0,0,.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s, transform .25s;
+  }
+  .toast.is-on{ opacity: 1; transform: translateX(-50%) translateY(0); }
   @media (prefers-reduced-motion: reduce){
     .avail-dot{ animation: none; }
+    .bless{ animation: none !important; }
   }
   .term-shell{
     margin: 6px 0 10px 22px;
@@ -1610,6 +1679,13 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01zM12.04 20.15h-.004a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.83 2.42 8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01s-.43.06-.66.31c-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18z"/></svg>
 </a>
 
+<button type="button" class="bless" id="bless" aria-label="Send blessings upon the Prophet">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 13.3A8.4 8.4 0 1 1 10.6 3.5a6.7 6.7 0 0 0 9.8 9.8z"/><path fill="currentColor" d="M17.6 2.7l.82.1 2.08.8-2.08.8-.82 2.08-.8-2.08-2.08-.8 2.08-.8z"/></svg>
+  <span class="bless-text" data-i18n="blessText">send blessings</span>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <div class="modal" id="contactModal" hidden>
   <div class="modal-backdrop" data-close></div>
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -1733,8 +1809,8 @@
   // ----- editable stats / handles -----
   const STATS = {
     followers: 32000,   // fallback until /api/followers is live
-    apps: 2,            // apps shipped
-    strategies: 3,      // content strategies delivered
+    apps: 10,           // apps shipped
+    strategies: 25,     // content strategies delivered
     videos: 99          // content pieces produced
   };
   const MT_TIMES = ["10:00", "11:00", "12:00", "14:00", "16:00", "18:00"];
@@ -1789,6 +1865,8 @@
       floatApps: "apps",
       floatBoth: "both",
       floatContent: "content",
+      blessText: "send blessings",
+      blessMsg: "اللهم صلّ وسلم على نبينا محمد ﷺ",
       sysCmd: "cat system.txt",
       srSystem: "How we keep it clear",
       sysIntro: "the part that makes working with me boring-safe: official, written, organised.",
@@ -1823,8 +1901,8 @@
       projectsCmd: "ls projects/",
       metricsCmd: "cat metrics.txt",
       numbers: [
-        { n: "2", l: "apps shipped" },
-        { n: "3", l: "content strategies" },
+        { n: "10+", l: "apps shipped" },
+        { n: "25+", l: "content strategies" },
         { n: "99+", l: "videos published" }
       ],
       projects: [
@@ -1970,6 +2048,8 @@
       floatApps: "تطبيقات",
       floatBoth: "الاثنين",
       floatContent: "محتوى",
+      blessText: "صلي على النبي",
+      blessMsg: "اللهم صلّ وسلم على نبينا محمد ﷺ",
       sysCmd: "cat system.txt",
       srSystem: "إزاي الشغل بيتظبط",
       sysIntro: "الجزء اللي بيخلّي الشغل معايا آمن ومكتوب ومنظّم",
@@ -2004,8 +2084,8 @@
       projectsCmd: "ls projects/",
       metricsCmd: "cat metrics.txt",
       numbers: [
-        { n: "2", l: "تطبيقات أطلقتها" },
-        { n: "3", l: "استراتيجيات محتوى" },
+        { n: "10+", l: "تطبيقات أطلقتها" },
+        { n: "25+", l: "استراتيجيات محتوى" },
         { n: "99+", l: "فيديو منشور" }
       ],
       projects: [
@@ -2147,9 +2227,39 @@
   }
 
   function renderNumbers(){
-    document.getElementById("numbersRow").innerHTML = t.numbers.map(it =>
-      "<div class=\"numbers-item\"><div class=\"n\">" + it.n + "</div><div class=\"l\">" + it.l + "</div></div>"
-    ).join("");
+    document.getElementById("numbersRow").innerHTML = t.numbers.map(it => {
+      const m = it.n.match(/(\d+)/);
+      const target = m ? Number(m[1]) : 0;
+      const suffix = it.n.replace(/\d+/, "");
+      return "<div class=\"numbers-item\"><div class=\"n\" data-target=\"" + target + "\" data-suffix=\"" + suffix + "\">0" + suffix + "</div><div class=\"l\">" + it.l + "</div></div>";
+    }).join("");
+    startCounters();
+  }
+
+  function startCounters(){
+    const els = document.querySelectorAll("#numbersRow .n[data-target]");
+    if(!els.length) return;
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const run = el => {
+      const target = Number(el.getAttribute("data-target")) || 0;
+      const suffix = el.getAttribute("data-suffix") || "";
+      if(reduced){ el.textContent = target + suffix; return; }
+      const dur = 1500, start = performance.now();
+      const tick = now => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if(!("IntersectionObserver" in window)){ els.forEach(run); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if(en.isIntersecting){ run(en.target); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.4 });
+    els.forEach(el => io.observe(el));
   }
 
   function renderProjects(){
@@ -2298,6 +2408,30 @@
     }, { threshold: 0.5 });
     observer.observe(el);
   });
+
+  // ----- blessing tab -----
+  const blessEl = document.getElementById("bless");
+  const toastEl = document.getElementById("toast");
+  const BLESS_KEY = "shehab_bless_count";
+  let blessN = 0;
+  try{ blessN = Number(localStorage.getItem(BLESS_KEY)) || 0; }catch(e){}
+  let toastTimer = 0;
+  function showToast(msg){
+    if(!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add("is-on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("is-on"), 3400);
+  }
+  if(blessEl){
+    blessEl.addEventListener("click", () => {
+      blessN++;
+      try{ localStorage.setItem(BLESS_KEY, String(blessN)); }catch(e){}
+      blessEl.classList.add("is-open");
+      setTimeout(() => blessEl.classList.remove("is-open"), 1700);
+      showToast(t.blessMsg + (blessN > 1 ? "  \u00B7  \u00D7" + blessN : ""));
+    });
+  }
 
   // ----- modals -----
   const modal = document.getElementById("contactModal");
