@@ -103,6 +103,12 @@
     --text-muted: #93a89b;
     --accent: #e8a33d;
     --accent-soft: #6fa787;
+    --font-ui: 'JetBrains Mono', monospace;
+    --font-body: 'IBM Plex Sans', sans-serif;
+  }
+  html[lang="ar"]{
+    --font-ui: 'IBM Plex Sans Arabic', sans-serif;
+    --font-body: 'IBM Plex Sans Arabic', sans-serif;
   }
   *{ box-sizing: border-box; }
   html,body{ margin:0; padding:0; }
@@ -112,7 +118,7 @@
       radial-gradient(circle at 85% 110%, rgba(111,167,135,0.14), transparent 50%),
       linear-gradient(180deg, #0d1712 0%, #101c17 45%, #0c1712 100%);
     color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     min-height: 100vh;
     display: flex;
@@ -179,7 +185,7 @@
   }
   .titlebar-host{
     margin-left: 8px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12.5px;
     color: var(--text-muted);
     white-space: nowrap;
@@ -201,7 +207,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     padding: 3px 8px;
     border-radius: 4px;
@@ -218,7 +224,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11.5px;
     color: var(--accent-soft);
   }
@@ -249,20 +255,14 @@
   }
   .content{
     padding: 40px 5vw 46px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 14.5px;
   }
-  html[lang="ar"] body, html[lang="ar"] .comment, html[lang="ar"] .sr-only, html[lang="ar"] .footer,
-  html[lang="ar"] .project-desc, html[lang="ar"] .service-desc, html[lang="ar"] .field,
-  html[lang="ar"] .field input, html[lang="ar"] .field textarea, html[lang="ar"] .field select,
-  html[lang="ar"] .note, html[lang="ar"] .numbers-item .l, html[lang="ar"] .step-desc,
-  html[lang="ar"] .content-grid .pf-desc, html[lang="ar"] .followers-label{
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
-  }
-  html[lang="ar"] h1, html[lang="ar"] .role, html[lang="ar"] .prompt, html[lang="ar"] .cmd,
-  html[lang="ar"] .line, html[lang="ar"] .out, html[lang="ar"] .tag b, html[lang="ar"] .numbers-item .n{
-    font-family: 'JetBrains Mono', monospace;
-  }
+  html[lang="ar"] body, html[lang="ar"] .content{ line-height: 1.9; letter-spacing: 0; }
+  html[lang="ar"] .content{ font-size: 15px; }
+  html[lang="ar"] .role{ font-weight: 600; }
+  html[lang="ar"] h1{ letter-spacing: 0; }
+  html[lang="ar"] .cmd, html[lang="ar"] .tag{ font-weight: 700; }
   .sr-only{
     position: absolute;
     width: 1px; height: 1px;
@@ -275,7 +275,7 @@
   .comment{
     margin: 0 0 20px 0;
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12.5px;
     opacity: .75;
   }
@@ -293,7 +293,7 @@
   .out{
     margin: 4px 0 22px 22px;
     color: var(--text-muted);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 15px;
     max-width: 720px;
     unicode-bidi: plaintext;
@@ -317,7 +317,7 @@
     box-shadow: 0 0 0 3px rgba(232,163,61,.08);
   }
   h1{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 26px;
     font-weight: 700;
     margin: 0;
@@ -334,7 +334,7 @@
   .role{
     margin: 0 0 24px 22px;
     color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 14px;
     unicode-bidi: plaintext;
   }
@@ -358,7 +358,7 @@
     padding: 4px 10px;
     border-radius: 5px;
     font-size: 12.5px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     transition: color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
     cursor: default;
   }
@@ -402,7 +402,7 @@
     margin-bottom: 6px;
   }
   .project-name{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 14px;
     color: var(--accent);
@@ -410,11 +410,11 @@
   .project-tag{
     font-size: 11px;
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
   }
   .project-desc{
     margin: 0 0 10px 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 13.5px;
     color: var(--text-muted);
     line-height: 1.55;
@@ -425,7 +425,7 @@
     gap: 6px;
   }
   .tech{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 10.5px;
     color: var(--accent-soft);
     border: 1px solid var(--border);
@@ -461,7 +461,7 @@
     flex-wrap: wrap;
   }
   .service-name{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 14px;
     color: var(--accent);
@@ -469,11 +469,11 @@
   .service-tag{
     font-size: 11px;
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
   }
   .service-desc{
     margin: 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 13.5px;
     color: var(--text-muted);
     line-height: 1.55;
@@ -488,7 +488,7 @@
     background: var(--surface);
     border-radius: 5px;
     padding: 6px 9px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11.5px;
     line-height: 1.5;
     color: var(--text-muted);
@@ -527,13 +527,13 @@
     border-color: var(--accent);
   }
   .step-num{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     color: var(--accent-soft);
     letter-spacing: 1px;
   }
   .step-title{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 13.5px;
     color: var(--text);
@@ -541,7 +541,7 @@
   }
   .step-desc{
     margin: 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 12.5px;
     color: var(--text-muted);
     line-height: 1.55;
@@ -559,13 +559,13 @@
     padding: 12px 14px;
   }
   .numbers-item .n{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 26px;
     color: var(--accent);
   }
   .numbers-item .l{
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 12.5px;
     color: var(--text-muted);
     margin-top: 2px;
@@ -595,7 +595,7 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     color: var(--accent-soft);
     border: 1px solid var(--border);
@@ -620,7 +620,7 @@
   .links a{
     color: var(--text);
     text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 14px;
     border-bottom: 1px solid var(--border);
     padding-bottom: 2px;
@@ -638,13 +638,13 @@
     flex-wrap: wrap;
   }
   .followers-count{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 30px;
     color: var(--accent);
   }
   .followers-label{
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 13.5px;
     color: var(--text-muted);
   }
@@ -654,7 +654,7 @@
     border-top: 1px solid var(--border);
     color: var(--text-muted);
     font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     margin-left: 22px;
   }
   .duck{
@@ -696,7 +696,7 @@
     margin: 18px 0 8px 22px;
   }
   .cta{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 13.5px;
     color: var(--text);
     background: var(--surface-2);
@@ -763,7 +763,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 14px;
     color: var(--accent);
     margin-bottom: 14px;
@@ -783,7 +783,7 @@
   .field{
     display: block;
     margin-bottom: 12px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12px;
     color: var(--text-muted);
     text-transform: lowercase;
@@ -796,7 +796,7 @@
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 14px;
     padding: 9px 12px;
     resize: vertical;
@@ -814,7 +814,7 @@
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 14px;
     padding: 9px 30px 9px 12px;
     appearance: none;
@@ -866,7 +866,7 @@
     color: var(--text-muted);
     border-radius: 6px;
     padding: 7px 10px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11.5px;
     line-height: 1.5;
     text-align: left;
@@ -901,7 +901,7 @@
     filter: invert(.8) sepia(.3) saturate(.6);
   }
   .note{
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 12px;
     color: var(--text-muted);
     margin: 0 0 4px 0;
@@ -975,7 +975,7 @@
   }
   .path-q{
     display: block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12px;
     color: var(--text-muted);
     margin-bottom: 10px;
@@ -1014,19 +1014,19 @@
     height: 22px;
   }
   .path-opt b{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 14px;
     color: var(--text);
   }
   .path-opt em{
     font-style: normal;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 12.5px;
     color: var(--text-muted);
   }
   .path-note{
     display: block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     color: var(--text-muted);
     margin-top: 8px;
@@ -1050,7 +1050,7 @@
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     padding: 4px 10px;
     border-radius: 18px;
@@ -1075,7 +1075,7 @@
   }
   .sys-intro{
     margin: 4px 0 14px 22px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 13.5px;
     color: var(--text-muted);
     max-width: 720px;
@@ -1093,7 +1093,7 @@
   }
   .pledge b{
     display: block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12.5px;
     color: var(--text);
     margin-bottom: 4px;
@@ -1101,7 +1101,7 @@
   .pledge i{
     display: block;
     font-style: normal;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 12px;
     color: var(--text-muted);
     line-height: 1.5;
@@ -1129,7 +1129,7 @@
     border-bottom: 1px solid var(--border);
   }
   .topnav a{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11.5px;
     color: var(--text-muted);
     text-decoration: none;
@@ -1139,6 +1139,9 @@
     transition: color .15s, border-color .15s, background .15s;
   }
   .topnav a:hover{ color: var(--accent); border-color: var(--accent); background: rgba(232,163,61,.06); }
+  @media (max-width: 560px){
+    .topnav .nav-optional{ display: none; }
+  }
   [id^="s-"], #termShell{ scroll-margin-top: 66px; }
   .hero-cta{
     display: flex;
@@ -1154,7 +1157,7 @@
     align-items: center;
     gap: 8px;
     margin: 14px 0 4px 22px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12px;
     color: #63d391;
     border: 1px solid rgba(99,211,145,.35);
@@ -1193,7 +1196,7 @@
     width: calc(100% - 22px);
     margin: 4px 0 0 22px;
     border-collapse: collapse;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12.5px;
     table-layout: fixed;
   }
@@ -1229,7 +1232,7 @@
   .review:hover{ border-color: var(--accent-soft); transform: translateY(-3px); }
   .review-stars{ color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-bottom: 8px; }
   .review-text{
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 13px;
     line-height: 1.6;
     color: var(--text);
@@ -1245,13 +1248,13 @@
     justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12px;
     color: var(--accent);
     flex-shrink: 0;
   }
-  .review-who b{ display: block; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text); }
-  .review-who span{ font-family: 'IBM Plex Sans', sans-serif; font-size: 11.5px; color: var(--text-muted); }
+  .review-who b{ display: block; font-family: var(--font-ui); font-size: 12px; color: var(--text); }
+  .review-who span{ font-family: var(--font-body); font-size: 11.5px; color: var(--text-muted); }
   .wa-float{
     position: fixed;
     right: 18px;
@@ -1283,7 +1286,7 @@
     background: var(--surface-2);
     border-radius: 8px;
     padding: 12px 14px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     transition: border-color .2s;
   }
   .term-tag{ color: var(--text-muted); font-size: 12px; }
@@ -1323,11 +1326,11 @@
     border: 0;
     outline: 0;
     color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 13px;
     caret-color: var(--accent);
   }
-  html[lang="ar"] .term-inputrow input{ font-family: 'JetBrains Mono', monospace; }
+  html[lang="ar"] .term-inputrow input{ font-family: var(--font-ui); }
   .term-examples{
     display: flex;
     gap: 8px;
@@ -1338,7 +1341,7 @@
     background: transparent;
     border: 1px solid var(--border);
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     padding: 3px 9px;
     border-radius: 20px;
@@ -1403,6 +1406,16 @@
     .reveal{ opacity: 1 !important; transform: none !important; }
     .cursor{ animation: none; }
   }
+  html[lang="ar"] .prompt,
+  html[lang="ar"] .tprompt,
+  html[lang="ar"] .tech,
+  html[lang="ar"] .numbers-item .n,
+  html[lang="ar"] .titlebar-host,
+  html[lang="ar"] .tag,
+  html[lang="ar"] .term-inputrow input,
+  html[lang="ar"] .footer{
+    font-family: 'JetBrains Mono', monospace;
+  }
 </style>
 </head>
 <body>
@@ -1436,12 +1449,11 @@
 </div>
 
 <nav class="topnav" id="topnav" aria-label="Sections">
-  <a href="#s-about" data-i18n="navAbout">about</a>
   <a href="#s-projects" data-i18n="navProjects">projects</a>
   <a href="#s-services" data-i18n="navServices">services</a>
-  <a href="#s-why" data-i18n="navWhy">why me</a>
+  <a class="nav-optional" href="#s-why" data-i18n="navWhy">why me</a>
+  <a class="nav-optional" href="#s-about" data-i18n="navAbout">about</a>
   <a href="#s-contact" data-i18n="navContact">contact</a>
-  <a href="#termShell" data-i18n="navTerminal">terminal</a>
 </nav>
 
 <main class="terminal">
@@ -1457,10 +1469,6 @@
       <span class="lang-switch" role="group" aria-label="Language">
         <button type="button" class="lang-btn" data-lang="en">EN</button>
         <button type="button" class="lang-btn" data-lang="ar">عربي</button>
-      </span>
-      <span class="status"><span class="status-dot"></span><span data-i18n="status">online</span></span>
-      <span class="flutter-badge" title="Flutter — since 2023">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z" fill="#45D1FD"/></svg>
       </span>
     </span>
   </div>

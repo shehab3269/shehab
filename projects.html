@@ -38,6 +38,12 @@
     --text-muted: #93a89b;
     --accent: #e8a33d;
     --accent-soft: #6fa787;
+    --font-ui: 'JetBrains Mono', monospace;
+    --font-body: 'IBM Plex Sans', sans-serif;
+  }
+  html[lang="ar"]{
+    --font-ui: 'IBM Plex Sans Arabic', sans-serif;
+    --font-body: 'IBM Plex Sans Arabic', sans-serif;
   }
   *{ box-sizing: border-box; }
   html,body{ margin:0; padding:0; }
@@ -48,13 +54,13 @@
       linear-gradient(180deg, #0d1712 0%, #101c17 45%, #0c1712 100%);
     background-attachment: fixed;
     color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     min-height: 100vh;
-    line-height: 1.65;
+    line-height: 1.7;
     padding-bottom: 40px;
   }
-  html[lang="ar"] body{ font-family: 'IBM Plex Sans Arabic', sans-serif; }
+  html[lang="ar"] body{ line-height: 1.9; letter-spacing: 0; }
 
   .pbar{
     position: sticky;
@@ -76,7 +82,7 @@
     gap: 9px;
     color: var(--text);
     text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12.5px;
     font-weight: 700;
   }
@@ -89,7 +95,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11.5px;
     font-weight: 700;
     padding: 4px 10px;
@@ -100,14 +106,10 @@
   .lang-btn:hover{ color: var(--accent); border-color: var(--accent); }
   .lang-btn.is-on{ color: var(--accent); border-color: var(--accent); background: rgba(232,163,61,.10); }
 
-  .wrap{
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 26px 5vw 0;
-  }
+  .wrap{ max-width: 1080px; margin: 0 auto; padding: 26px 5vw 0; }
 
   .comment{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 13px;
     color: var(--text-muted);
     margin: 0 0 6px;
@@ -116,13 +118,14 @@
   html[dir="rtl"] .comment .pr{ margin-right: 0; margin-left: 8px; }
 
   h1{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: clamp(26px, 5vw, 36px);
     font-weight: 700;
     margin: 0 0 6px;
     letter-spacing: -0.5px;
     color: var(--text);
   }
+  html[lang="ar"] h1{ letter-spacing: 0; }
   .lede{
     color: var(--text-muted);
     font-size: 15.5px;
@@ -145,13 +148,13 @@
     margin-bottom: 8px;
   }
   .pname{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 17px;
     font-weight: 700;
     color: var(--accent);
   }
   .ptag{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11px;
     color: var(--text-muted);
     border: 1px solid var(--border);
@@ -176,10 +179,10 @@
   }
 
   .shots-label{
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 11.5px;
     color: var(--text-muted);
-    margin: 0 0 10px;
+    margin: 2px 0 10px;
     text-transform: lowercase;
   }
   .shots-label::before{ content: "$ "; color: var(--accent); }
@@ -223,14 +226,13 @@
     justify-content: space-between;
     gap: 12px;
     flex-wrap: wrap;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12px;
     color: var(--text-muted);
   }
   .foot a{ color: var(--accent); text-decoration: none; }
   .foot a:hover{ text-decoration: underline; }
 
-  /* lightbox */
   .lb{
     position: fixed;
     inset: 0;
@@ -276,7 +278,7 @@
     bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-ui);
     font-size: 12px;
     color: var(--text-muted);
   }
@@ -307,20 +309,7 @@
   <h1 data-i18n="heading">projects</h1>
   <p class="lede" data-i18n="lede">things I've built — shipped apps, tools and client work.</p>
 
-  <article class="pcard featured">
-    <div class="phead">
-      <span class="pname">to-do-list</span>
-      <span class="ptag" data-i18n="todoTag">productivity · personal</span>
-    </div>
-    <p class="pdesc" data-i18n="todoDesc">A daily organizer that keeps your tasks, prayer times and focus time in one place — built to fight brain rot and keep the day on track.</p>
-    <div class="ptech">
-      <span class="tech">Flutter</span>
-      <span class="tech">Dart</span>
-      <span class="tech">Local storage</span>
-    </div>
-    <p class="shots-label" data-i18n="shots">screenshots</p>
-    <div class="shots" id="shots"></div>
-  </article>
+  <div id="apps"></div>
 
   <p class="shots-label" data-i18n="more">more projects</p>
   <div class="grid" id="grid"></div>
@@ -342,15 +331,43 @@
 <script>
   "use strict";
 
-  const SHOTS = [
-    "assets/shots/todo-app/shot-01.jpg",
-    "assets/shots/todo-app/shot-02.jpg",
-    "assets/shots/todo-app/shot-03.jpg",
-    "assets/shots/todo-app/shot-04.jpg",
-    "assets/shots/todo-app/shot-05.jpg",
-    "assets/shots/todo-app/shot-06.jpg",
-    "assets/shots/todo-app/shot-07.jpg"
+  // To add a new app: drop screenshots into assets/shots/<folder>/shot-0N.jpg
+  // and push one object below (shots + en/ar copy). It renders automatically.
+  const APPS = [
+    {
+      shots: [1,2,3,4,5,6,7].map(n => "assets/shots/todo-app/shot-0" + n + ".jpg"),
+      en: { name: "to-do-list", tag: "productivity · personal", desc: "A daily organizer that keeps your tasks, prayer times and focus time in one place — built to fight brain rot and keep the day on track.", tech: ["Flutter", "Dart", "Local storage"] },
+      ar: { name: "to-do-list", tag: "إنتاجية · شخصي", desc: "منظّم يومي بيرتب المهام ومواقيت الصلاة ووقت التركيز في مكان واحد — اتعمل عشان يعالج تعفن الدماغ ويخلي يومك مظبوط.", tech: ["Flutter", "Dart", "تخزين محلي"] }
+    },
+    {
+      shots: [1,2,3,4].map(n => "assets/shots/gym-app/shot-0" + n + ".jpg"),
+      en: { name: "gym-app", tag: "fitness · health", desc: "Workouts, plans and progress tracking — the gym side of your day in one app.", tech: ["Flutter", "Dart"] },
+      ar: { name: "gym-app", tag: "لياقة · صحة", desc: "تمارين وخطط ومتابعة تقدّم — كل حاجة في نادي الجيم في تطبيق واحد.", tech: ["Flutter", "Dart"] }
+    },
+    {
+      shots: [1,2,3,4].map(n => "assets/shots/shipping/shot-0" + n + ".jpg"),
+      en: { name: "shipping-app", tag: "logistics", desc: "Orders, rates and delivery tracking — shipping handled in one place.", tech: ["Flutter", "Dart"] },
+      ar: { name: "shipping-app", tag: "شحن ولوجستيات", desc: "طلبات وأسعار وتتبّع للشحنات — الشحن كله مظبوط في مكان واحد.", tech: ["Flutter", "Dart"] }
+    },
+    {
+      shots: [1,2].map(n => "assets/shots/payment/shot-0" + n + ".jpg"),
+      en: { name: "payment-app", tag: "fintech · payments", desc: "Send, receive and track transactions without the friction.", tech: ["Flutter", "Dart"] },
+      ar: { name: "payment-app", tag: "مدفوعات", desc: "ابعت واستقبل وتتبّع المعاملات من غير أي تعقيد.", tech: ["Flutter", "Dart"] }
+    }
   ];
+
+  const WORK = {
+    en: [
+      { name: "codeq", tag: "EdTech · Community", desc: "Programming education with a community layer — courses, challenges and discussion in one product, built from the ground up.", tech: ["Flutter", "Dart", "REST API", "MongoDB"] },
+      { name: "tagit", tag: "ERP", desc: "An ERP that runs a business day-to-day — inventory, sales and internal workflows managed in one place.", tech: ["Flutter", "TypeScript", "MongoDB"] },
+      { name: "portfolio-builds", tag: "Various", desc: "Landing pages, dashboards and client sites — smaller scope, same attention to detail.", tech: ["Flutter", "JavaScript"] }
+    ],
+    ar: [
+      { name: "codeq", tag: "تعليم · مجتمع", desc: "تعليم برمجة مع طبقة مجتمع — كورسات وتحديات ونقاش في منتج واحد، مبني من الصفر.", tech: ["Flutter", "Dart", "REST API", "MongoDB"] },
+      { name: "tagit", tag: "ERP", desc: "نظام ERP بيشغّل الشغل اليومي لأي بيزنس — مخزون ومبيعات وسير عمل داخلي في مكان واحد.", tech: ["Flutter", "TypeScript", "MongoDB"] },
+      { name: "portfolio-builds", tag: "متفرق", desc: "صفحات لانداينج وداشبوردات ومواقع كلاينت — نطاق أصغر، لكن نفس الشغلة والاهتمام.", tech: ["Flutter", "JavaScript"] }
+    ]
+  };
 
   const I18N = {
     en: {
@@ -359,16 +376,9 @@
       comment: "ls projects/",
       heading: "projects",
       lede: "things I've built — shipped apps, tools and client work.",
-      todoTag: "productivity · personal",
-      todoDesc: "A daily organizer that keeps your tasks, prayer times and focus time in one place — built to fight brain rot and keep the day on track.",
       shots: "screenshots",
       more: "more projects",
-      back: "← back to home",
-      projects: [
-        { name: "codeq", tag: "EdTech · Community", desc: "Programming education with a community layer — courses, challenges and discussion in one product, built from the ground up.", tech: ["Flutter", "Dart", "REST API", "MongoDB"] },
-        { name: "tagit", tag: "ERP", desc: "An ERP that runs a business day-to-day — inventory, sales and internal workflows managed in one place.", tech: ["Flutter", "TypeScript", "MongoDB"] },
-        { name: "portfolio-builds", tag: "Various", desc: "Landing pages, dashboards and client sites — smaller scope, same attention to detail.", tech: ["Flutter", "JavaScript"] }
-      ]
+      back: "← back to home"
     },
     ar: {
       title: "المشاريع — شهاب مدحت",
@@ -376,51 +386,27 @@
       comment: "ls projects/",
       heading: "المشاريع",
       lede: "حاجات بنيتها — تطبيقات منشورة وأدوات وشغل كلاينت.",
-      todoTag: "إنتاجية · شخصي",
-      todoDesc: "منظّم يومي بيرتب المهام ومواقيت الصلاة ووقت التركيز في مكان واحد — اتعمل عشان يعالج تعفن الدماغ ويخلي يومك مظبوط.",
       shots: "سكرينشوتات",
       more: "مشاريع تانية",
-      back: "→ رجوع للرئيسية",
-      projects: [
-        { name: "codeq", tag: "تعليم · مجتمع", desc: "تعليم برمجة مع طبقة مجتمع — كورسات وتحديات ونقاش في منتج واحد، مبني من الصفر.", tech: ["Flutter", "Dart", "REST API", "MongoDB"] },
-        { name: "tagit", tag: "ERP", desc: "نظام ERP بيشغّل الشغل اليومي لأي بيزنس — مخزون ومبيعات وسير عمل داخلي في مكان واحد.", tech: ["Flutter", "TypeScript", "MongoDB"] },
-        { name: "portfolio-builds", tag: "متفرق", desc: "صفحات لانداينج وداشبوردات ومواقع كلاينت — نطاق أصغر، لكن نفس الشغلة والاهتمام.", tech: ["Flutter", "JavaScript"] }
-      ]
+      back: "→ رجوع للرئيسية"
     }
   };
 
-  let lang = "en";
-  let t = I18N.en;
-
-  const shotsEl = document.getElementById("shots");
+  const appsEl = document.getElementById("apps");
   const gridEl = document.getElementById("grid");
 
-  function renderShots(){
-    shotsEl.innerHTML = SHOTS.map((src, i) =>
-      '<button type="button" data-i="' + i + '" aria-label="Screenshot ' + (i + 1) + '">' +
-        '<img src="' + src + '" alt="to-do-list app screenshot ' + (i + 1) + '" loading="lazy" width="720" height="1600">' +
+  function shotsFor(app, lang, appIndex){
+    return app.shots.map((src, i) =>
+      '<button type="button" data-app="' + appIndex + '" data-i="' + i + '" aria-label="' + app[lang].name + ' screenshot ' + (i + 1) + '">' +
+        '<img src="' + src + '" alt="' + app[lang].name + ' screenshot ' + (i + 1) + '" loading="lazy" width="720" height="1600">' +
       '</button>'
     ).join("");
-    shotsEl.querySelectorAll("button").forEach(b => {
-      b.addEventListener("click", () => openLb(Number(b.dataset.i)));
-    });
   }
 
-  function renderGrid(){
-    gridEl.innerHTML = t.projects.map(p =>
-      '<article class="pcard">' +
-        '<div class="phead"><span class="pname">' + p.name + '</span><span class="ptag">' + p.tag + '</span></div>' +
-        '<p class="pdesc">' + p.desc + '</p>' +
-        '<div class="ptech">' + p.tech.map(x => '<span class="tech">' + x + '</span>').join("") + '</div>' +
-      '</article>'
-    ).join("");
-  }
-
-  function applyLang(l){
-    lang = (l === "ar") ? "ar" : "en";
-    t = I18N[lang];
+  function render(lang){
     document.documentElement.lang = lang;
     document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+    const t = I18N[lang];
     document.title = t.title;
     document.getElementById("metaDesc").setAttribute("content", t.desc);
     try{ localStorage.setItem("shehab_lang", lang); }catch(e){}
@@ -429,36 +415,60 @@
       const k = el.dataset.i18n;
       if(t[k] !== undefined && typeof t[k] === "string") el.textContent = t[k];
     });
-    renderGrid();
+
+    appsEl.innerHTML = APPS.map((app, ai) => {
+      const c = app[lang];
+      return '<article class="pcard">' +
+        '<div class="phead"><span class="pname">' + c.name + '</span><span class="ptag">' + c.tag + '</span></div>' +
+        '<p class="pdesc">' + c.desc + '</p>' +
+        '<div class="ptech">' + c.tech.map(x => '<span class="tech">' + x + '</span>').join("") + '</div>' +
+        '<p class="shots-label">' + t.shots + '</p>' +
+        '<div class="shots" data-shots="' + ai + '">' + shotsFor(app, lang, ai) + '</div>' +
+      '</article>';
+    }).join("");
+
+    gridEl.innerHTML = WORK[lang].map(p =>
+      '<article class="pcard">' +
+        '<div class="phead"><span class="pname">' + p.name + '</span><span class="ptag">' + p.tag + '</span></div>' +
+        '<p class="pdesc">' + p.desc + '</p>' +
+        '<div class="ptech">' + p.tech.map(x => '<span class="tech">' + x + '</span>').join("") + '</div>' +
+      '</article>'
+    ).join("");
+
+    appsEl.querySelectorAll(".shots button").forEach(b => {
+      b.addEventListener("click", () => openLb(Number(b.dataset.app), Number(b.dataset.i)));
+    });
   }
 
   document.querySelectorAll(".lang-btn").forEach(b => {
-    b.addEventListener("click", () => applyLang(b.dataset.lang));
+    b.addEventListener("click", () => render(b.dataset.lang));
   });
 
   // ----- lightbox -----
   const lb = document.getElementById("lb");
   const lbImg = document.getElementById("lbImg");
   const lbCount = document.getElementById("lbCount");
-  let lbIndex = 0;
+  let cur = { app: 0, i: 0 };
 
-  function openLb(i){
-    lbIndex = i;
+  function paintLb(){
+    const app = APPS[cur.app];
+    lbImg.src = app.shots[cur.i];
+    lbImg.alt = app.en.name + " screenshot " + (cur.i + 1);
+    lbCount.textContent = (cur.i + 1) + " / " + app.shots.length;
+  }
+  function openLb(appIndex, shotIndex){
+    cur = { app: appIndex, i: shotIndex };
     paintLb();
     lb.classList.add("is-open");
     document.body.style.overflow = "hidden";
-  }
-  function paintLb(){
-    lbImg.src = SHOTS[lbIndex];
-    lbImg.alt = "to-do-list app screenshot " + (lbIndex + 1);
-    lbCount.textContent = (lbIndex + 1) + " / " + SHOTS.length;
   }
   function closeLb(){
     lb.classList.remove("is-open");
     document.body.style.overflow = "";
   }
   function step(n){
-    lbIndex = (lbIndex + n + SHOTS.length) % SHOTS.length;
+    const len = APPS[cur.app].shots.length;
+    cur.i = (cur.i + n + len) % len;
     paintLb();
   }
   document.getElementById("lbClose").addEventListener("click", closeLb);
@@ -468,14 +478,13 @@
   document.addEventListener("keydown", e => {
     if(!lb.classList.contains("is-open")) return;
     if(e.key === "Escape") closeLb();
-    else if(e.key === "ArrowRight") step(lang === "rtl" ? -1 : 1);
-    else if(e.key === "ArrowLeft") step(lang === "rtl" ? 1 : -1);
+    else if(e.key === "ArrowRight") step(document.documentElement.dir === "rtl" ? -1 : 1);
+    else if(e.key === "ArrowLeft") step(document.documentElement.dir === "rtl" ? 1 : -1);
   });
 
-  renderShots();
   let saved = "en";
   try{ saved = localStorage.getItem("shehab_lang") || "en"; }catch(e){}
-  applyLang(saved);
+  render(saved === "ar" ? "ar" : "en");
 </script>
 </body>
 </html>
