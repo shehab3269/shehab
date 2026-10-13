@@ -92,7 +92,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #101c17;
@@ -113,6 +113,7 @@
       linear-gradient(180deg, #0d1712 0%, #101c17 45%, #0c1712 100%);
     color: var(--text);
     font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -280,7 +281,15 @@
   }
   .line{ display:flex; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; unicode-bidi: plaintext; }
   .prompt{ color: var(--accent-soft); flex-shrink:0; }
-  .cmd{ color: var(--text); }
+  .cmd{ color: var(--text); font-weight: 700; }
+  .cmd-link{
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(232,163,61,.45);
+    transition: border-color .15s, opacity .15s;
+  }
+  .cmd-link:hover{ border-bottom-color: var(--accent); opacity: .85; }
   .out{
     margin: 4px 0 22px 22px;
     color: var(--text-muted);
@@ -318,7 +327,7 @@
   }
   .alias{
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 500;
     color: var(--text-muted);
     vertical-align: 2px;
   }
@@ -1519,7 +1528,7 @@
     <h2 class="sr-only" data-i18n="srStats">Metrics</h2>
     <div class="numbers reveal" id="numbersRow"></div>
 
-    <div class="line" id="s-projects"><span class="prompt">$</span><span class="cmd" data-i18n="projectsCmd">ls projects/</span></div>
+    <div class="line" id="s-projects"><span class="prompt">$</span><a class="cmd cmd-link" href="projects.html" data-i18n="projectsCmd">ls projects/</a></div>
     <h2 class="sr-only" data-i18n="srProjects">Projects</h2>
     <div class="projects reveal" id="projectsRow"></div>
 
@@ -2529,7 +2538,10 @@
   const termCommands = {
     help: termHelpLines,
     about: () => termPrint(t.about),
-    projects: () => t.projects.forEach(p => { termPrint(p.name + " — " + p.tag, "ok"); termPrint("  " + p.desc); termPrint("  [" + p.tech.join(", ") + "]"); }),
+    projects: () => {
+      termPrint("→ projects.html", "ok");
+      setTimeout(() => { window.location.href = "projects.html"; }, 320);
+    },
     project: () => termCommands.projects(),
     services: termFiles["services.txt"],
     pricing: termFiles["services.txt"],
@@ -2542,7 +2554,11 @@
     hi: () => { termPrint(t.termOpenedForm); openModal(modal); },
     say_hi: () => termCommands.hi(),
     whoami: () => termPrint(t.termWhoami),
-    ls: () => termPrint(t.termFiles),
+    ls: arg => {
+      const a = (arg || "").trim().replace(/\/+$/, "");
+      if(a === "projects"){ termCommands.projects(); return; }
+      termPrint(t.termFiles);
+    },
     clear: () => { if(termLog) termLog.innerHTML = ""; },
     sudo: () => termPrint(t.termSudo, "err"),
     duck: () => termPrint(t.termDuck),
