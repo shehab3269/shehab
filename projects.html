@@ -208,6 +208,75 @@
   .shots button:hover{ border-color: var(--accent); transform: translateY(-3px); }
   .shots img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 
+  /* --- featured project --- */
+  .pcard--feature{
+    padding-top: 0;
+    background:
+      radial-gradient(85% 65% at 88% -12%, rgba(232,163,61,.18), transparent 62%),
+      radial-gradient(70% 60% at 0% 110%, rgba(111,167,135,.12), transparent 60%),
+      var(--surface);
+    border-color: rgba(232,163,61,.36);
+    box-shadow: 0 26px 60px -34px rgba(0,0,0,.9);
+  }
+  .pcard--feature .phead{ margin-top: 18px; }
+  .feat-banner{
+    position: relative;
+    margin: 0 -20px 16px;
+    border-bottom: 1px solid var(--border);
+    border-radius: 11px 11px 0 0;
+    overflow: hidden;
+    line-height: 0;
+    background: #0b1310;
+  }
+  .feat-banner img{ width: 100%; height: auto; display: block; }
+  .feat-badge{
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #101c17;
+    background: var(--accent);
+    padding: 5px 11px;
+    border-radius: 30px;
+    line-height: 1.25;
+    box-shadow: 0 8px 22px -8px rgba(232,163,61,.95);
+  }
+  html[dir="rtl"] .feat-badge{ left: auto; right: 12px; }
+  .feat-stat{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -4px 0 16px;
+  }
+  .feat-stat span{
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--accent);
+    border: 1px dashed rgba(232,163,61,.42);
+    background: rgba(232,163,61,.07);
+    border-radius: 20px;
+    padding: 3px 11px;
+  }
+  .shots--float button{
+    background: transparent;
+    border-color: transparent;
+    overflow: visible;
+  }
+  .shots--float img{
+    object-fit: contain;
+    filter: drop-shadow(0 16px 24px rgba(0,0,0,.55));
+    transition: filter .2s;
+  }
+  .shots--float button:hover{
+    border-color: rgba(232,163,61,.45);
+    transform: translateY(-5px);
+  }
+  .shots--float button:hover img{ filter: drop-shadow(0 24px 32px rgba(0,0,0,.68)); }
+
   .grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -288,6 +357,10 @@
     .pcard{ padding: 16px; }
     .shots{ grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .pdesc{ font-size: 14px; }
+    .feat-banner{ margin: 0 -16px 14px; }
+    .pcard--feature .phead{ margin-top: 15px; }
+    .feat-badge{ top: 9px; left: 9px; font-size: 9px; padding: 4px 9px; }
+    html[dir="rtl"] .feat-badge{ left: auto; right: 9px; }
   }
 </style>
 </head>
@@ -335,6 +408,17 @@
   // and push one object below (shots + en/ar copy). It renders automatically.
   const APPS = [
     {
+      banner: "assets/shots/restaurant/hero.jpg",
+      float: true,
+      ratio: "422 / 864",
+      w: 422,
+      h: 864,
+      flow: { en: ["menu", "cart", "orders", "delivery"], ar: ["منيو", "سلة", "طلبات", "توصيل"] },
+      shots: [1,2,3,4,5,6,7,8].map(n => "assets/shots/restaurant/shot-0" + n + ".png"),
+      en: { name: "restaurant-app", tag: "food · ordering", desc: "A full restaurant ordering app — browse the menu, build a cart, place the order and follow it to delivery. Designed and built end to end in Flutter.", tech: ["Flutter", "Dart"] },
+      ar: { name: "restaurant-app", tag: "مطاعم · طلبات", desc: "تطبيق مطعم كامل — تصفّح المنيو، كوّن السلة، اطلب وتابع الطلب لحد ما يوصلك. تصميم وتنفيذ من أوله لآخره بـ Flutter.", tech: ["Flutter", "Dart"] }
+    },
+    {
       shots: [1,2,3,4,5,6,7].map(n => "assets/shots/todo-app/shot-0" + n + ".jpg"),
       en: { name: "to-do-list", tag: "productivity · personal", desc: "A daily organizer that keeps your tasks, prayer times and focus time in one place — built to fight brain rot and keep the day on track.", tech: ["Flutter", "Dart", "Local storage"] },
       ar: { name: "to-do-list", tag: "إنتاجية · شخصي", desc: "منظّم يومي بيرتب المهام ومواقيت الصلاة ووقت التركيز في مكان واحد — اتعمل عشان يعالج تعفن الدماغ ويخلي يومك مظبوط.", tech: ["Flutter", "Dart", "تخزين محلي"] }
@@ -378,6 +462,7 @@
       lede: "things I've built — shipped apps, tools and client work.",
       shots: "screenshots",
       more: "more projects",
+      featured: "featured",
       back: "← back to home"
     },
     ar: {
@@ -388,6 +473,7 @@
       lede: "حاجات بنيتها — تطبيقات منشورة وأدوات وشغل كلاينت.",
       shots: "سكرينشوتات",
       more: "مشاريع تانية",
+      featured: "مشروع مميّز",
       back: "→ رجوع للرئيسية"
     }
   };
@@ -396,9 +482,11 @@
   const gridEl = document.getElementById("grid");
 
   function shotsFor(app, lang, appIndex){
+    const w = app.w || 720, h = app.h || 1600;
+    const ratio = app.ratio ? ' style="aspect-ratio:' + app.ratio + '"' : "";
     return app.shots.map((src, i) =>
-      '<button type="button" data-app="' + appIndex + '" data-i="' + i + '" aria-label="' + app[lang].name + ' screenshot ' + (i + 1) + '">' +
-        '<img src="' + src + '" alt="' + app[lang].name + ' screenshot ' + (i + 1) + '" loading="lazy" width="720" height="1600">' +
+      '<button type="button"' + ratio + ' data-app="' + appIndex + '" data-i="' + i + '" aria-label="' + app[lang].name + ' screenshot ' + (i + 1) + '">' +
+        '<img src="' + src + '" alt="' + app[lang].name + ' screenshot ' + (i + 1) + '" loading="lazy" width="' + w + '" height="' + h + '">' +
       '</button>'
     ).join("");
   }
@@ -418,12 +506,24 @@
 
     appsEl.innerHTML = APPS.map((app, ai) => {
       const c = app[lang];
-      return '<article class="pcard">' +
+      const banner = app.banner
+        ? '<div class="feat-banner">' +
+            '<img src="' + app.banner + '" alt="' + c.name + ' showcase" width="1585" height="970">' +
+            '<span class="feat-badge">' + t.featured + '</span>' +
+          '</div>'
+        : "";
+      const flow = app.flow
+        ? '<div class="feat-stat">' + app.flow[lang].map(x => '<span>' + x + '</span>').join("") + '</div>'
+        : "";
+      const shotsCls = app.float ? "shots shots--float" : "shots";
+      return '<article class="pcard' + (app.banner ? " pcard--feature" : "") + '">' +
+        banner +
         '<div class="phead"><span class="pname">' + c.name + '</span><span class="ptag">' + c.tag + '</span></div>' +
         '<p class="pdesc">' + c.desc + '</p>' +
         '<div class="ptech">' + c.tech.map(x => '<span class="tech">' + x + '</span>').join("") + '</div>' +
+        flow +
         '<p class="shots-label">' + t.shots + '</p>' +
-        '<div class="shots" data-shots="' + ai + '">' + shotsFor(app, lang, ai) + '</div>' +
+        '<div class="' + shotsCls + '" data-shots="' + ai + '">' + shotsFor(app, lang, ai) + '</div>' +
       '</article>';
     }).join("");
 
